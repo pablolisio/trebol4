@@ -1,5 +1,0 @@
-razonSocial.Required=Debe ingresar la Razón Social
-cuitCuil.Required=Debe ingresar el CUIT/CUIL del cliente
-razonSocial.StringValidator.maximum=La Razón social debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.
-cuitCuil.StringValidator.maximum=El Cuit debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.
-domicilio.StringValidator.maximum=El Domicilio debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.

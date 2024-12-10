@@ -1,5 +1,0 @@
-<wicket:panel>
-      <footer>
-        <p>© 2016 ProIT Software · <a href="terminos">T&eacute;rminos y condiciones</a></p>
-      </footer>
-</wicket:panel>
