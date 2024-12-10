@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/ordenesPago-64.png" alt="OrdenesPago"/>
+					Ordenes de Pago
+					<small><span>Seleccionar Modo de Pago (Paso 3 de 5)</span></small>
+				</h2>
+			</div>
+			<div class="panel-body" style="width: 70%;">
+			
+				<form class="form-horizontal" role="form" wicket:id="form">				
+
+				  <div class="errorLogin" wicket:id="feedback"></div>
+				  
+				  <div class="well well-sm">
+					  <span class="text-warning">Importe a Pagar: </span><span wicket:id="importe" class="badge"></span>
+					  <h3><small><span wicket:id="modosPago" class="text-default"></span></small></h3>
+				  </div>
+				  
+				  
+				  <div wicket:id="seccionEfectivo">
+	                  <div class="page-header">
+					  	<h3>Efectivo</h3>
+					  </div>
+					  <small class="pull-right"><em><u>Nota</u>: En importes indicar decimales con coma.</em></small>
+	                  <div class="form-group">
+					    	<p class="col-sm-3 control-label">Importe<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></p>
+						    <div class="col-sm-10" style="width: 30%;">
+					    		<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right" placeholder="Importe Efectivo" wicket:id="importeEfectivo" autocomplete="off" onClick="this.select()"></div>
+							</div>
+					  </div>
+				  </div>
+				  
+				  <div wicket:id="seccionCheques">
+					  <div class="page-header">
+					  	<h3>Cheques <a href="#" type="submit" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Agrega una fila nueva en la lista de cheques" wicket:id="agregarCheque"> <span class="glyphicon glyphicon-plus"></span> Agregar Cheque</a></h3>
+					  </div>
+					  <div wicket:id="chequesContainer">
+					  	  <small><em><u>Nota</u>: En importes indicar decimales con coma.</em></small>
+						  <table class="table">
+							<thead>
+								<tr>
+									<td class="col-xs-3"><b>Banco</b></td>
+									<td class="col-xs-3"><b>Nro Cheque</b></td>
+									<td class="col-xs-3"><b>Fecha</b></td>
+									<td class="col-xs-3"><b>Importe</b></td>
+									<td class="text-center"><b>Quitar fila</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaCheques">
+									<td>
+										<select class="form-control" wicket:id="bancoCheque">
+								  			<option>Santander Rio</option>
+								  			<option>Nacion</option>
+										</select>
+									</td>
+									<td>
+										<input type="text" class="form-control" placeholder="Nro Cheque" wicket:id="nroCheque" autocomplete="off">
+									</td>
+									<td>
+										<input type="text" class="form-control" placeholder="Haga click aqu&iacute;" wicket:id="datepickerCheque" autocomplete="off"></input>
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-addon">$</span>
+											 <input type="text" class="form-control text-right" placeholder="Importe Cheque" wicket:id="importeCheque" autocomplete="off" onClick="this.select()">								
+										</div>
+									</td>
+									<td class="text-center">
+										<a href="#" type="submit" class="btn btn-danger btn-xs" role="button" wicket:id="eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					  </div>
+				  </div>
+				  
+				  <div wicket:id="seccionTransferencias">
+					  <div class="page-header">
+					  	<h3>Transferencias <small><span wicket:id="datosBcariosTransferencia"></span></small> <a href="#" type="submit" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Agrega una fila nueva en la lista de transferencias" wicket:id="agregarTransferencia"> <span class="glyphicon glyphicon-plus"></span> Agregar Transferencia</a></h3>
+					  </div>
+					  <div wicket:id="transferenciasContainer">
+					  	  <small><em><u>Nota</u>: En importes indicar decimales con coma.</em></small>
+						  <table class="table">
+							<thead>
+								<tr>
+									<td class="col-xs-3"><b>Fecha</b></td>
+									<td class="col-xs-3"><b>Importe</b></td>
+									<td class="text-center"><b>Quitar fila</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaTransferencias">
+									<td>
+										<input type="text" class="form-control" placeholder="Haga click aqu&iacute;" wicket:id="datepickerTransferencia" autocomplete="off"></input>
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-addon">$</span>
+											 <input type="text" class="form-control text-right" placeholder="Importe Transferencia" wicket:id="importeTransferencia" autocomplete="off" onClick="this.select()">								
+										</div>
+									</td>
+									<td class="text-center">
+										<a href="#" type="submit" class="btn btn-danger btn-xs" role="button" wicket:id="eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					  </div>
+				  </div>
+				  
+				  <div wicket:id="seccionTransferencia3ro">
+					  <div class="page-header">
+					  	<h3>Transferencia a terceros</h3>
+					  </div>
+					  <small class="pull-right"><em><u>Nota</u>: En importes indicar decimales con coma.</em></small>
+	                  <div class="form-group">
+					    	<p class="col-sm-3 control-label">Importe<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></p>
+						    <div class="col-sm-10" style="width: 50%;">
+					    		<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right" placeholder="Importe Transferencia a Terceros" wicket:id="importeTransferencia3ros" autocomplete="off" onClick="this.select()"></div>
+							</div>
+					  </div>
+					  <div class="form-group">
+					  		<p class="col-sm-3 control-label">Seleccionar Tercero<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></p>
+						    <div class="col-sm-10" style="width: 50%;">
+							   <select class="form-control" wicket:id="cobroAlternativo">
+								  <option>Titular1</option>
+								  <option>Titular2</option>
+								</select>
+							</div>
+					  </div>
+				  </div>
+				  
+				  <div wicket:id="seccionTarjetaCredito">
+	                  <div class="page-header">
+					  	<h3>Tarjeta Cr&eacute;dito</h3>
+					  </div>
+					  <small class="pull-right"><em><u>Nota</u>: En importes indicar decimales con coma.</em></small>
+	                  <div class="form-group">
+					    	<p class="col-sm-3 control-label">Importe<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></p>
+						    <div class="col-sm-10" style="width: 30%;">
+					    		<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right" placeholder="Importe Tarjeta Credito" wicket:id="importeTarjetaCredito" autocomplete="off" onClick="this.select()"></div>
+							</div>
+					  </div>
+				  </div>
+				  
+				  <div class="col-md-5 col-md-offset-9">
+				  	<button type="submit" class="btn btn-info">Siguiente <span class="glyphicon glyphicon-chevron-right"></span></button>
+					<a href="registrar-op" class="btn btn-default">Volver</a>
+				  </div>
+				</form>				
+					
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+	
+</wicket:extend>
+</body>
+</html>

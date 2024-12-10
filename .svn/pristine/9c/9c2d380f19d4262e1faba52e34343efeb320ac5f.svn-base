@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+					
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+    
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Alerta.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/reportes.png" alt="Reportes"/>
+					Reportes
+					<small>Cheques en Cartera</small>
+				</h2>
+			</div>
+			<div class="panel-body">
+				
+				<div wicket:id="dataContainer">
+				
+					<table class="table">
+						<thead>
+							<tr>
+								<td style="width: 40%;"><strong>Cliente</strong></td>
+								<td><strong>Banco</strong></td>
+								<td><strong>Nro. Cheque</strong></td>
+								<td><strong>Fecha Cheque</strong></td>
+								<td class="active"><strong>Importe</strong></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaCheques">								
+								<td class="text-left"><span wicket:id="cliente">cliente</span></td>
+								<td><span wicket:id="banco">banco</span></td>
+								<td><span wicket:id="nro">nro</span></td>
+								<td><span wicket:id="fecha">fecha</span></td>
+								<td class="active text-right"><span wicket:id="importe">importe</span></td>
+							</tr>									
+						</tbody>
+					</table>
+					
+					<em><span wicket:id="noExistenCheques" class="text-warning"></span></em>
+					
+					<div class="row">
+					  <div class="col-md-3 col-md-offset-9">
+					  	<p class="text-primary">
+							<strong>TOTAL: <span class="badge" wicket:id="total">$123</span></strong>
+						</p>
+					  </div>
+					</div>
+					
+				</div>
+				
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

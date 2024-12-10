@@ -1,0 +1,186 @@
+package com.proit.modelo;
+
+import java.io.Serializable;
+
+import javax.persistence.Entity;
+import javax.persistence.Transient;
+
+/**
+ * 
+ * Esta clase representa un tipo de factura. Usado para facturas Compra y Venta
+ * Los mismos pueden ser: A, B, C, Nota de Credito A, Nota de Credito B, Nota de Credito C.
+ * Tambien se agregaron los tipos E y N (N=En Negro).
+ */
+@Entity(name="tipo_factura")
+public class TipoFactura extends EntidadGenerica implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Transient
+	public static final TipoFactura TIPO_A = new TipoFactura(1, "A", "Factura Tipo A", false);
+	@Transient
+	public static final TipoFactura TIPO_B = new TipoFactura(2, "B", "Factura Tipo B", false);
+	@Transient
+	public static final TipoFactura TIPO_C = new TipoFactura(3, "C", "Factura Tipo C", false);
+	@Transient
+	public static final TipoFactura NOTA_DEB_A = new TipoFactura(4, "Nota de Debito A", "Nota de Debito A", false);
+	@Transient
+	public static final TipoFactura NOTA_DEB_B = new TipoFactura(5, "Nota de Debito B", "Nota de Debito B", false);
+	@Transient
+	public static final TipoFactura NOTA_DEB_C = new TipoFactura(6, "Nota de Debito C", "Nota de Debito C", false);
+	@Transient
+	public static final TipoFactura NOTA_CRED_A = new TipoFactura(7, "Nota de Credito A", "Nota de Credito A", false);
+	@Transient
+	public static final TipoFactura NOTA_CRED_B = new TipoFactura(8, "Nota de Credito B", "Nota de Credito B", false);
+	@Transient
+	public static final TipoFactura NOTA_CRED_C = new TipoFactura(9, "Nota de Credito C", "Nota de Credito C", false);
+	@Transient
+	public static final TipoFactura TIPO_E = new TipoFactura(10, "E", "Factura Tipo E", false);
+	@Transient
+	/**
+	 * Representa las facturas en Negro.
+	 */
+	public static final TipoFactura TIPO_N = new TipoFactura(11, "N", "Factura Tipo N", false);
+	
+	private String nombre;
+	
+	private String descripcion;
+	
+	public TipoFactura() {
+	}
+			
+	public TipoFactura(int id, String nombre, String descripcion, boolean borrado) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.borrado = borrado;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	public boolean isTipoA(){
+		return this.equals(TipoFactura.TIPO_A);
+	}
+	
+	public boolean isTipoB(){
+		return this.equals(TipoFactura.TIPO_B);
+	}
+	
+	public boolean isTipoC(){
+		return this.equals(TipoFactura.TIPO_C);
+	}
+	
+	public boolean isTipoE(){
+		return this.equals(TipoFactura.TIPO_E);
+	}
+	
+	public boolean isTipoN(){
+		return this.equals(TipoFactura.TIPO_N);
+	}
+	
+	public boolean isNotaCreditoA(){
+		return this.equals(TipoFactura.NOTA_CRED_A);
+	}
+	
+	public boolean isNotaCreditoB(){
+		return this.equals(TipoFactura.NOTA_CRED_B);
+	}
+	
+	public boolean isNotaCreditoC(){
+		return this.equals(TipoFactura.NOTA_CRED_C);
+	}
+	
+	public boolean isNotaCredito(){
+		return isNotaCreditoA() || isNotaCreditoB() || isNotaCreditoC();
+	}
+	
+	public boolean isNotaDebitoA(){
+		return this.equals(TipoFactura.NOTA_DEB_A);
+	}
+	
+	public boolean isNotaDebitoB(){
+		return this.equals(TipoFactura.NOTA_DEB_B);
+	}
+	
+	public boolean isNotaDebitoC(){
+		return this.equals(TipoFactura.NOTA_DEB_C);
+	}
+	
+	public boolean isNotaDebito(){
+		return isNotaDebitoA() || isNotaDebitoB() || isNotaDebitoC();
+	}
+	
+	public double getPorcentajeIVA() {
+		if (isTipoA() || isNotaCreditoA() || isNotaDebitoA()) {
+			return 21;
+		}
+		return 0; //Los demas tipos de factura no discriminan IVA.
+	}
+	
+	public String getNombreCorto() {
+		if (isTipoA() || isTipoB() || isTipoC() || isTipoE() || isTipoN()) {
+			return getNombre();
+		}
+		if (isNotaCreditoA()) {
+			return "NC A";
+		}
+		if (isNotaCreditoB()) {
+			return "NC B";
+		}
+		if (isNotaCreditoC()) {
+			return "NC C";
+		}
+		if (isNotaDebitoA()) {
+			return "ND A";
+		}
+		if (isNotaDebitoB()) {
+			return "ND B";
+		}
+		if (isNotaDebitoC()) {
+			return "ND C";
+		}
+		return null;
+	}
+	
+	@Override
+	public String toString(){
+		String texto = "Tipo Factura id: "+ id + ", ";
+		texto += "nombre: " + nombre + ", ";
+		texto += "descripcion: " + descripcion + ", ";
+		return texto;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof TipoFactura){
+			TipoFactura other = (TipoFactura) obj;
+			return this.getNombre().equals(other.getNombre())
+				&& ((this.getDescripcion() == null && other.getDescripcion() == null) || (this.getDescripcion() != null && this.getDescripcion().equals(other.getDescripcion())));
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public int hashCode(){
+	    return (int) getNombre().hashCode() *
+	    		(getDescripcion()==null?0:getDescripcion().hashCode()) ;
+	}
+	
+	
+}

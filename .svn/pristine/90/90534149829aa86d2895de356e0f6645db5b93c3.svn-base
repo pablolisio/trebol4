@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	
+	<!-- Notificaciones -->
+    <!--<div class="text-center" wicket:id="notificaciones" ></div>-->
+   	<div wicket:id="alerta" class="alertNotificaciones alert-success alert-dismissable">
+	  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	  <p class="text-center">
+	  <a href="notificaciones" class="alert-link"><span class="glyphicon glyphicon-bell">&nbsp;</span></a>
+	  <span wicket:id="textoAlerta">Notificaciones</span>
+	  <a href="notificaciones" class="alert-link">aqu&iacute;</a>
+	  </p>
+	</div>
+
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+
+		<style>
+			.super-centered {
+			    position:relative; 
+			    width:100%;
+			    text-align:center; 
+			    vertical-align:middle;
+			    z-index: 9999;
+			    padding-right: 15px;
+			  	padding-left: 15px;
+			}
+		</style>
+
+    <div class="container marketing" wicket:id="container">
+
+		<!--  <table class="super-centered"> -->
+		<div class="alert alert-warning" role="alert">
+		Compras
+		<table>
+			<tr>
+				<td style="width:10%" align="center" valign="middle" >
+					<a href="registrar-proveedor"><img style="width: 110px; height: 110px;" class="img-circle" src="images/proveedores.png" alt="Crear Proveedor" data-toggle="tooltip" title="Crear Proveedor"></a>
+					<h3>Proveedores</h3>
+					<!--<p><small>Seleccione esta opci&oacute;n para crear un Proveedor</small></p>
+					<p><a class="btn btn-default" href="registrar-proveedor">Crear »</a></p>-->
+				</td>
+				<td style="width:10%" align="center" valign="middle" >
+					<a href="registrar-factura-compra"><img style="width: 110px; height: 110px;" class="img-circle" src="images/facturas.png" alt="Crear Factura Compra" data-toggle="tooltip" title="Crear Factura Compra"></a>
+					<h3>Facturas Compras</h3>
+					<!--<p><small>Seleccione esta opci&oacute;n para crear una Factura</small></p>
+					<p><a class="btn btn-default" href="registrar-factura-compra">Crear »</a></p>-->
+				</td>
+				<td style="width:10%" align="center" valign="middle" >
+					<a href="registrar-op"><img style="width: 110px; height: 110px;" class="img-circle" src="images/ordenesPago.png" data-toggle="tooltip" title="Crear Orden de Pago"></a>
+					<h3>Ordenes de Pago</h3>
+					<!--<p><small>Seleccione esta opci&oacute;n para crear una Orden de Pago</small></p>
+					<p><a href="registrar-op" class="btn btn-default" data-toggle="tooltip">Crear »</a></p>-->
+				</td>
+			</tr>
+		</table>
+		</div>
+		<div class="alert alert-info" role="alert">
+		Ventas
+		<table>
+			<tr>
+				<td style="width:10%" align="center" valign="middle" >
+					<a href="registrar-cliente"><img style="width: 110px; height: 110px;" class="img-circle" src="images/clientes.png" alt="Crear Cliente" data-toggle="tooltip" title="Crear Cliente"></a>
+					<h3>Clientes</h3>
+					<!--<p><small>Seleccione esta opci&oacute;n para crear un Cliente</small></p>
+					<p><a class="btn btn-default" href="registrar-cliente">Crear »</a></p>-->
+				</td>
+				<td style="width:10%" align="center" valign="middle" >
+					<a href="registrar-factura-venta"><img style="width: 110px; height: 110px;" class="img-circle" src="images/factura-venta.png" alt="Crear Factura Venta" data-toggle="tooltip" title="Crear Factura Venta"></a>
+					<h3>Facturas Ventas</h3>
+					<!--<p><small>Seleccione esta opci&oacute;n para crear una Factura</small></p>
+					<p><a class="btn btn-default" href="registrar-factura-venta">Crear »</a></p>-->
+				</td>
+				<td style="width:10%" align="center" valign="middle" >
+					<a href="registrar-cob"><img style="width: 110px; height: 110px;" class="img-circle" src="images/cobranzas.png" data-toggle="tooltip" title="Crear Cobranza"></a>
+					<h3>Cobranzas</h3>
+					<!--<p><small>Seleccione esta opci&oacute;n para crear una Cobranza</small></p>
+					<p><a href="registrar-cob" class="btn btn-default" data-toggle="tooltip">Crear »</a></p>-->
+				</td>
+			</tr>
+		</table>
+		</div>
+
+    </div><!-- /.container -->
+    
+    
+    <br/>
+    
+    <div class="row">
+    	<div align="center" valign="middle" >
+    		<em><span wicket:id="bienvenidoTxt">Bienvenido</span></em>
+    	</div>
+    </div>
+    
+
+</wicket:extend>
+</body>
+</html>

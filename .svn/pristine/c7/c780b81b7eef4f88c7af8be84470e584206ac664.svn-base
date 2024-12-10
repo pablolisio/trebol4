@@ -1,0 +1,80 @@
+package com.proit.servicios;
+
+import java.io.Serializable;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import com.proit.modelo.TipoFactura;
+import com.proit.wicket.FacturarOnLineAuthenticatedWebApplication;
+
+public class TipoFacturaService extends EntidadSimpleService<TipoFactura> implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	public TipoFacturaService() {
+		super(TipoFactura.class);
+	}
+	
+	/**
+	 * Retorna todas menos las E y N.
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TipoFactura> getAllForCompras() {
+		Session session = FacturarOnLineAuthenticatedWebApplication.getHibernateSession();		
+		Criteria criteria = session.createCriteria(TipoFactura.class);
+		criteria.add(Restrictions.ne("id", TipoFactura.TIPO_E.getId()));
+		criteria.add(Restrictions.ne("id", TipoFactura.TIPO_N.getId()));
+		criteria.add(Restrictions.eq("borrado", false));
+		criteria.addOrder(Order.asc("nombre"));
+		return criteria.list();
+	}
+	
+	/**
+	 * Retorna todas menos las C. Retorna A,B,E,N, y NC A, NC B, ND A, ND B
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<TipoFactura> getAllForVentas() {
+		Session session = FacturarOnLineAuthenticatedWebApplication.getHibernateSession();		
+		Criteria criteria = session.createCriteria(TipoFactura.class);
+		criteria.add(Restrictions.ne("id", TipoFactura.TIPO_C.getId()));
+		criteria.add(Restrictions.ne("id", TipoFactura.NOTA_CRED_C.getId()));
+		criteria.add(Restrictions.ne("id", TipoFactura.NOTA_DEB_C.getId()));
+		criteria.add(Restrictions.eq("borrado", false));
+		criteria.addOrder(Order.asc("nombre"));
+		return criteria.list();
+	}
+	
+	/**
+	 * Devuelve el tipo de factura equivalente.
+	 * Ejemplo: si es NC A, retorna tipo A
+	 * @param tipoFactura
+	 * @return
+	 */
+	public TipoFactura getEquivalenteParaNCoND(TipoFactura tipoFactura) {
+		if (!tipoFactura.isNotaCredito() && !tipoFactura.isNotaDebito()) {
+			return null;
+		}
+		TipoFactura tipoFacturaSaliente=null;
+		if (tipoFactura.isNotaCreditoA()) {
+			tipoFacturaSaliente = TipoFactura.TIPO_A;
+		} else if (tipoFactura.isNotaCreditoB()) {
+			tipoFacturaSaliente = TipoFactura.TIPO_B;
+		} else if (tipoFactura.isNotaCreditoC()) {
+			tipoFacturaSaliente = TipoFactura.TIPO_C;
+		} else if (tipoFactura.isNotaDebitoA()) {
+			tipoFacturaSaliente = TipoFactura.TIPO_A;
+		} else if (tipoFactura.isNotaDebitoB()) {
+			tipoFacturaSaliente = TipoFactura.TIPO_B;
+		} else if (tipoFactura.isNotaDebitoC()) {
+			tipoFacturaSaliente = TipoFactura.TIPO_C;
+		}
+		return tipoFacturaSaliente;
+	}
+
+}

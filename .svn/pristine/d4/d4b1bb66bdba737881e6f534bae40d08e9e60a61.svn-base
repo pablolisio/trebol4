@@ -1,0 +1,4 @@
+/* **** AGREGADO PARA QUE EN LOS PAGINADOS SE MUESTRE CON DISTINTO ESTILA LA PAGINA ACTUAL **** */
+span.goto [disabled] {
+	text-decoration: underline;
+}

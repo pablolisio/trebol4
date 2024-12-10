@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">La cobranza ha sido eliminada.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">
+					<img src="images/cobranzas-64.png" alt="Cobranzas"/>
+					Cobranzas
+				</h1>
+			</div>
+			<div class="panel-body">
+			
+			    <div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                        <form class="form-horizontal" role="form">
+                        
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Fecha</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Haga click aqu&iacute;" wicket:id="datepicker" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="hoy" href="#"><small>Hoy</small></a>
+										<a wicket:id="todasFechas" href="#"><small>Todas</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Cliente</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="clienteSearchAutoComplete" data-toggle="tooltip" title="Utilice la raz&oacute;n social" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="todosClientes" href="#"><small>Todos</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Seleccionar</label>
+								<div class="col-sm-10 checkbox" style="width: 40%;">
+								<label>
+									<input type="checkbox" wicket:id="checkSoloRetencionesSinValidar"><small>Solo Cobranzas con Retenciones Sin Validar</small>
+								</label>
+								</div>
+							</div>
+							
+                        </form>
+                        
+                    </div>
+                </div>
+    
+    			<div class="pull-left">
+					<a wicket:id="crearCobranzaLink" href="registrar-cobranza" class="btn btn-primary">Crear Cobranza</a>
+				</div>
+	            <br/>
+	            <br/>
+	            
+	            <div class="row">
+    			<div wicket:id="listadoContainer">
+					<div wicket:id="dataContainer">
+						<table class="table">
+							<thead>
+								<tr>
+									<!-- <td style="width: 40%;"><b>Cliente</b></td>-->
+									<td><b>Cliente</b></td>
+									<td><b>Recibo</b></td>
+									<td><b>Fecha</b></td>
+									<td><b>Total</b></td>
+									<td class="text-center"><b data-toggle="tooltip" title="Retenciones validadas">Ret.</b></td>
+									<td class="text-center"><b>Detalles</b></td>
+									<td class="text-center"><b>Eliminar</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaFacturaVentaCobranza">
+									<td><span wicket:id="cliente">cliente</span></td>
+									<td><span wicket:id="nroRecibo">nroRecibo</span></td>
+									<td><span wicket:id="fecha">fecha</span></td>
+									<td><span wicket:id="total" class="text-default"></span></td>
+									<td class="text-center">
+										<a class="btn btn-warning btn-xs" wicket:id="editarRetenciones" href="#"><small><span wicket:id="retencionesValidadas" data-toggle="tooltip" title="Editar Retenciones">si</span></small></a>										
+									</td>
+									<td class="text-center">
+										<a class="btn btn-info btn-xs" wicket:id="verDetalles" href="#"><span class="glyphicon glyphicon-zoom-in"></span></a>
+									</td>
+									<td class="text-center">
+									<button wicket:id="botonIntentarEliminar" class="btn btn-danger btn-xs" role="button" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span><span wicket:id="textoEliminar">textoEliminar</span></button>
+									
+									<div wicket:id="eliminarModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									        <h4 class="modal-title">Eliminar Cobranza</h4>
+									      </div>
+									      <div class="modal-body">
+									      	<div class="alert alert-danger">
+									        	Esta seguro que desea eliminar la cobranza <span wicket:id="cobranzaAEliminar">cobranza</span>? Las facturas 
+									        	asociadas a dicha Cobranza son: <span wicket:id="facturasAsociadas"></span>
+									        </div>
+									      </div>
+									      <div class="modal-footer">
+									        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+									        <a class="btn btn-danger" wicket:id="eliminar" href="cobranzas">Si</a>
+									      </div>
+									    </div><!-- /.modal-content -->
+									  </div><!-- /.modal-dialog -->
+									</div><!-- /.modal -->
+									
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="text-center" wicket:id="paginator"></div>
+				</div>
+				</div>
+				
+				<p class="text-muted text-center" wicket:id="msjFiltrar"><em>Utilice los filtros de b&uacute;squeda para mostrar listado...</em></p>
+				
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

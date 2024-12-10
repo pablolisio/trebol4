@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/cobranzas-64.png" alt="Cobranzas"/>
+					Cobranzas
+					<small><span>Seleccionar Cliente y Facturas (Paso 1 de 4)</span></small>
+				</h2>
+			</div>
+			<div class="panel-body" style="width: 70%;">
+			
+				<form class="form-horizontal" role="form" wicket:id="form">				
+
+				  <div class="errorLogin" wicket:id="feedback"></div>
+				  
+				  <div class="form-group">
+						<label class="col-sm-3 control-label">Cliente<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+						<div class="col-sm-10" style="width: 40%;">
+							<input type="text" class="form-control" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="clienteSearchAutocomplete" data-toggle="tooltip" title="Utilice la raz&oacute;n social" autofocus></input>
+						</div>
+						<!-- <div class="row">
+							<h6>
+								<a href="#"><small>Buscar facturas</small></a>
+							</h6>
+						</div>-->
+					</div>
+				  
+				  
+                  <div wicket:id="facturasContainer">
+                      <table class="table table-hover text-right">
+                      	<caption class="text-left text-warning"><em>Seleccionar facturas</em></caption>
+                      	<thead>
+							<tr>
+								<td><b>Nro</b></td>
+								<td><b>Fecha</b></td>
+								<td><b>Total (con IVA)</b></td>
+								<td><b>Estado</b></td>
+								<td><b>Seleccionar</b></td>
+							</tr>
+						</thead>
+                          <tbody>
+                              <tr wicket:id="listaFacturas">
+                                  <td><span wicket:id="nro">nro</span></td>
+                                  <td><span wicket:id="fecha">fecha</span></td>
+                                  <td><span wicket:id="total">importe</span></td>
+                                  <td><span wicket:id="estado">estado</span></td>
+                                  <td><input type="checkbox" wicket:id="checkbox"></td>
+                              </tr>
+                          </tbody>
+                      </table>
+                      <em><span wicket:id="noExistenFacturas" class="text-warning"></span></em>
+                  </div>
+                  
+                  <br/>
+                  
+                  <div class="form-group">
+				    <label class="col-sm-3 control-label">Importe Final<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+					    <div class="col-sm-10" style="width: 30%;">
+				    		<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right" placeholder="Importe Final" wicket:id="importeFinal" onClick="this.select()"></div>
+						</div>
+				  </div>
+                  <div class="form-group">
+				    <label class="col-sm-3 control-label">Importe Parcial<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+				    	<div class="col-sm-10" style="width: 30%;">
+				    		<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right" placeholder="Importe Parcial" wicket:id="importeParcial" autocomplete="off" onClick="this.select()"></div>
+						</div>
+				  </div>
+				  
+				  <div class="col-md-5 col-md-offset-9">
+				  	<button type="submit" class="btn btn-info">Siguiente <span class="glyphicon glyphicon-chevron-right"></span></button>
+					<a href="cobranzas" class="btn btn-default">Volver</a>
+				  </div>
+				</form>				
+					
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+	
+</wicket:extend>
+</body>
+</html>

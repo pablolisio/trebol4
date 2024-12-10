@@ -1,0 +1,6 @@
+detalle.Required=Debe ingresar el Detalle.
+banco.nullValid=Seleccionar
+banco.Required=Debe ingresar el Banco.
+datepicker.Required=Debe ingresar la Fecha.
+importe.Required=Debe ingresar el Importe. Al menos ingrese 0.
+importe.IConverter.double=El Importe debe contener un número válido.

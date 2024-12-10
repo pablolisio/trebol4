@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">
+					<img src="images/notificaciones.png" alt="Notificaciones"/>
+					Notificaciones
+				</h1>
+			</div>
+			<div class="panel-body">
+			
+				<h4 class="text-danger"><span wicket:id="titulo">Notificaciones:</span></h4>
+				
+				<ul class="list-group">
+				  	<li class="list-group-item text-warning" wicket:id="notificaciones">
+				  		<span wicket:id="mensaje">mensaje</span>
+				  	</li>
+				</ul>
+				
+				
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

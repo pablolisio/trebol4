@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+					
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+    
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Alerta.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/bank.png" alt="Presupuesto Banco"/>
+					Presupuesto Banco
+				</h2>
+			</div>
+			<div class="panel-body">
+			
+				<div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                        <form class="form-inline" role="form" wicket:id="form">
+                        
+							<div class="form-group col-sm-4">
+								<input type="text" class="form-control input-sm" placeholder="Fecha" wicket:id="datepicker" autocomplete="off"></input>
+							</div>
+							<div class="form-group col-sm-3">
+								<h6>
+									<a wicket:id="todasFechas" href="#"><small>Todas fechas</small></a>
+								</h6>
+							</div>
+							<div class="form-group col-sm-2 checkbox">
+								<label data-toggle="tooltip" title="Trae los debitados tambi&eacute;n">
+									<input type="checkbox" wicket:id="mostrarDebitados"><small><em>Mostrar debitados</em></small>
+								</label>
+								<br/>
+								<label data-toggle="tooltip" title="Trae los agregados tambi&eacute;n">
+									<input type="checkbox" wicket:id="mostrarPresupuesto"><small><em>Mostrar presupuesto</em></small>
+								</label>
+							</div>
+							<div class="form-group col-sm-3 text-primary">
+								<small>
+										<strong>Total: <span class="badge" wicket:id="total">$123</span></strong>									
+								</small>
+							</div>
+                        </form>
+                        
+                    </div>
+                </div>
+                
+                <div class="pull-left">
+					<a href="registrar-presupuesto" class="btn btn-primary pull-right">Crear Item</a>
+				</div>
+	            <br/>
+	            <br/>
+				
+				<div class="row">   			
+					<div wicket:id="dataContainer">
+					
+						<table class="table">
+							<thead>
+								<tr>
+									<td style="width: 40%;"><strong>Proveedor / Detalle</strong></td>
+									<td><strong>Banco</strong></td>
+									<td><strong>Nro. Cheque</strong></td>
+									<td><strong>Fecha</strong></td>
+									<td class="active"><strong>Importe</strong></td>
+									<td class="text-center"><b>Debitado</b></td>
+									<td class="text-center"><b>Editar</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaCheques">								
+									<td class="text-left"><span wicket:id="proveedor">proveedor</span></td>
+									<td><span wicket:id="banco">banco</span></td>
+									<td><span wicket:id="nro">nro</span></td>
+									<td><span wicket:id="fecha">fecha</span></td>
+									<td class="active text-right"><span wicket:id="importe">importe</span></td>
+									<td class="text-center">
+										<a class="btn btn-warning btn-xs" wicket:id="debitarDesdebitarLink" href="#"><small><span wicket:id="debitado" data-toggle="tooltip" title="Debitar / Cancelar D&eacute;bito">cerrado</span></small></a>
+									</td>
+									<td class="text-center"><a class="btn btn-success btn-xs" wicket:id="editar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
+								</tr>									
+							</tbody>
+						</table>
+						
+					</div>
+					<div class="text-center" wicket:id="paginator"></div>
+				</div>
+				
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

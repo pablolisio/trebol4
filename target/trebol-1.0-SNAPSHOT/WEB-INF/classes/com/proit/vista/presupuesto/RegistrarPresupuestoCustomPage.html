@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/bank.png" alt="Presupuesto Banco"/>
+					Presupuesto Banco
+					<small><span wicket:id="secondaryTitle">Crear</span></small>
+				</h2>
+			</div>
+			<div class="panel-body" style="width: 70%;">
+			
+				<div class="errorLogin" wicket:id="feedback"></div>
+			
+				<form class="form-horizontal" role="form" wicket:id="form">
+				  <div class="form-group">
+				    <label class="col-sm-3 control-label">Detalle<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+				    <div class="col-sm-6">
+				      <input type="text" class="form-control" placeholder="Detalle" wicket:id="detalle" autofocus  autocomplete="off">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				  	<label class="col-sm-3 control-label">Banco<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+				    <div class="col-sm-6">
+					    <select class="form-control" wicket:id="banco">
+						  <option>Santander Rio</option>
+						  <option>Nacion</option>
+						</select>
+						</div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-3 control-label">Fecha<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+				    <div class="col-sm-3">
+				      <input type="text" class="form-control" placeholder="Haga click aqu&iacute;" wicket:id="datepicker" autocomplete="off"></input>
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-sm-3 control-label">Importe<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+				    <div class="col-sm-3">
+				      <div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right" placeholder="Importe" wicket:id="importe" autocomplete="off" onClick="this.select()"/></div>
+				    </div>
+				  </div>
+				  
+						 
+				  <div class="form-group pull-right">
+				  	<button type="submit" class="btn btn-success"><span>Guardar</span></button>
+					<a href="presupuestos-banco" class="btn btn-default">Cancelar</a>
+				  </div>
+				</form>
+					
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+	
+</wicket:extend>
+</body>
+</html>

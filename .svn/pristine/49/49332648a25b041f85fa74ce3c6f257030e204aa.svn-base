@@ -1,0 +1,10 @@
+razonSocial.Required=Debe ingresar la Razón Social
+cuitCuil.Required=Debe ingresar el CUIT/CUIL del proveedor
+tipoCuenta.Required=Debe ingresar el Tipo De Cuenta
+tipoCuenta.nullValid=Seleccionar
+banco.Required=Debe ingresar el Banco
+banco.nullValid=Seleccionar
+nroCuenta.Required=Debe ingresar el Número de cuenta
+cbu.Required=Debe ingresar el CBU
+razonSocial.StringValidator.maximum=La Razon Social debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.
+cuitCuil.StringValidator.maximum=El CUIT/CUIL debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.

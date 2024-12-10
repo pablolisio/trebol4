@@ -1,0 +1,7 @@
+importeEfectivo.Required=Debe ingresar el Importe Efectivo. Como mínimo debe ingresar el valor '0' (Cero).
+importeEfectivo.IConverter.double=El Importe Efectivo debe contener un número válido.
+importeTransferenciaSinProv.Required=Debe ingresar el Importe Transferencia. Como mínimo debe ingresar el valor '0' (Cero).
+importeTransferenciaSinProv.IConverter.double=El Importe Transferencia debe contener un número válido.
+clienteSearchAutocomplete.Required=Debe ingresar el Cliente.
+eventoSearchAutoComplete.Required=Debe ingresar el Evento.
+concepto.StringValidator.maximum=El Concepto debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.

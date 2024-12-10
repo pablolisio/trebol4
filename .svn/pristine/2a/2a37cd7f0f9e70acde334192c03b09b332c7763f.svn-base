@@ -1,0 +1,2 @@
+nombre.StringValidator.maximum=El Nombre debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.
+descripcion.StringValidator.maximum=La descripción debe tener menos de ${maximum} caracteres, pero se ingresaron ${length}.

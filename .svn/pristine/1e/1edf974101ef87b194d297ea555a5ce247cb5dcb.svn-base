@@ -1,0 +1,3 @@
+password.Required=El campo Clave es requerido
+Required=El campo '${label}' es requerido
+email.EmailAddressValidator=El correo electrónico ingresado no es válido. Por favor, verifiquelo y vuelva a intentarlo.

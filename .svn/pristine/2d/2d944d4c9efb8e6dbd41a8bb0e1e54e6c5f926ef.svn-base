@@ -1,0 +1,12 @@
+importeEfectivo.Required=Debe ingresar el Importe Efectivo. Como mínimo debe ingresar el valor '0' (Cero).
+importeEfectivo.IConverter.double=El Importe Efectivo debe contener un número válido.
+percIva.Required=Debe ingresar la percepción del iva. Como mínimo debe ingresar el valor '0' (Cero).
+percIibb.Required=Debe ingresar la percepción de los ingresos brutos. Como mínimo debe ingresar el valor '0' (Cero).
+percGcias.Required=Debe ingresar la percepción de ganancias. Como mínimo debe ingresar el valor '0' (Cero).
+percSUSS.Required=Debe ingresar la percepción SUSS. Como mínimo debe ingresar el valor '0' (Cero).
+otrasPerc.Required=Debe ingresar la percepción 'Otras PERC'. Como mínimo debe ingresar el valor '0' (Cero).
+percIva.IConverter.double=La percepción del iva debe contener un número válido.
+percIibb.IConverter.double=La percepción de los ingresos brutos debe contener un número válido.
+percGcias.IConverter.double=La percepción de ganancias debe contener un número válido.
+percSUSS.IConverter.double=La percepción SUSS debe contener un número válido.
+otrasPerc.IConverter.double=La percepción 'Otras PERC' debe contener un número válido.

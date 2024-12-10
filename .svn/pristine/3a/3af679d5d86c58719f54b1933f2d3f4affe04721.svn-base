@@ -1,0 +1,6 @@
+email.Required=Debe ingresar un email. El mismo será utilizado por el cliente como nombre de usuario para acceder al sistema.
+email.EmailAddressValidator=El correo electrónico ingresado no es válido. Por favor, verifíquelo.
+clave.Required=Debe ingresar una Clave para el Email
+nombre.Required=El campo Nombre es requerido
+apellido.Required=El campo Apellido es requerido
+rol.Required=El campo Rol es requerido

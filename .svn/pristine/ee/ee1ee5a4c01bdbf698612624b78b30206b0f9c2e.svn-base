@@ -1,0 +1,80 @@
+<wicket:panel>
+        <div class="navbar navbar-inverse navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li wicket:id="inicioLink"><a class="navbar-brand" href="inicio">Trebol4 SRL</a></li>
+				<li wicket:id="gestionDropDown" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">GESTION <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li wicket:id="headerGestionCompras" class="text-warning"><b><em>&nbsp GESTION COMPRAS</em></b></li>
+                    <li wicket:id="proveedoresLink"><a href="proveedores"><span class="glyphicon glyphicon-user">&nbsp;</span>Proveedores</a></li>
+                    <li wicket:id="facturasComprasLink"><a href="facturasCompras"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>Facturas Compra</a></li>
+                    <li wicket:id="ordenesPagoLink"><a href="ordenesPago"><span class="glyphicon glyphicon-usd">&nbsp;</span>Ordenes de Pago</a></li>
+                    <li wicket:id="solicitudesPagoLink"><a href="solicitudesPago"><span class="glyphicon glyphicon-file">&nbsp;</span>Solicitudes de Pago</a></li>
+                    <li wicket:id="misSolicitudesPagoLink"><a href="misSolicitudesPago"><span class="glyphicon glyphicon-file">&nbsp;</span>Mis Solicitudes de Pago</a></li>
+                    <li wicket:id="divider1" class="divider"></li>
+                    <li wicket:id="cajaChicaLink"><a href="caja-chica"><span class="glyphicon glyphicon-inbox">&nbsp;</span>Caja Chica</a></li>
+                    <li wicket:id="presupuestoBancoLink"><a href="presupuestos-banco"><span class="glyphicon glyphicon-credit-card">&nbsp;</span>Presupuesto Banco</a></li>
+                    <li wicket:id="dividerEventos" class="divider"></li>
+                    <li wicket:id="eventosLink"><a href="eventos"><span class="text-danger glyphicon glyphicon-calendar">&nbsp;</span><span>EVENTOS</span></a></li>
+                    <li wicket:id="dividerGestionVentas" class="divider"></li>
+                    <li wicket:id="headerGestionVentas" class="text-info"><b><em>&nbsp GESTION VENTAS</em></b></li>
+                    <li wicket:id="clientesLink"><a href="clientes"><span class="glyphicon glyphicon-user">&nbsp;</span>Clientes</a></li>
+                    <li wicket:id="facturasVentasLink"><a href="facturasVentas"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>Facturas Venta</a></li>
+                    <li wicket:id="cobranzasLink"><a href="cobranzas"><span class="glyphicon glyphicon-usd">&nbsp;</span>Cobranzas</a></li>
+                    <li wicket:id="solicitudesFacVtaLink"><a href="solicitudesFacVta"><span class="glyphicon glyphicon-file">&nbsp;</span>Solicitudes Factura Venta</a></li>
+                    <li wicket:id="misSolicitudesFacVtaLink"><a href="misSolicitudesFacVta"><span class="glyphicon glyphicon-file">&nbsp;</span>Mis Solicitudes Factura Venta</a></li>
+                  </ul>
+                </li>
+                <li wicket:id="reportesDropDown" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">REPORTES <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li wicket:id="headerReportesCompras" class="text-warning"><b><em>&nbsp REPORTES COMPRAS</em></b></li>
+                    <li wicket:id="subdiarioComprasLink"><a href="subdiarioCompras"><span class="glyphicon glyphicon-stats">&nbsp;</span>Subdiario de Compras</a></li>
+                    <!--<li wicket:id="deudasVsPagosLink"><a href="deudasVsPagos"><span class="glyphicon glyphicon-stats">&nbsp;</span>Deudas Vs Pagos</a></li> -->
+                    <li wicket:id="totalesProveedorLink"><a href="totalesProveedor"><span class="glyphicon glyphicon-stats">&nbsp;</span>Totales por Proveedor</a></li>
+                    <li wicket:id="tarjetasCreditoLink"><a href="tarjetasCredito"><span class="glyphicon glyphicon-stats">&nbsp;</span>Tarjetas de Cr&eacute;dito</a></li>
+                    <li wicket:id="reporteOPsLink"><a href="reporteOPsMensual"><span class="glyphicon glyphicon-stats">&nbsp;</span>Ordenes de Pago Mensual</a></li>
+                    <!-- <li wicket:id="detalleCajaChicaLink"><a href="detalle-caja-chica"><span class="glyphicon glyphicon-stats">&nbsp;</span>Detalle Caja Chica</a></li>-->
+                    <li wicket:id="dividerEventos2" class="divider"></li>
+                    <li wicket:id="totalesEventoLink"><a href="totalesEvento"><span class="text-danger glyphicon glyphicon-stats">&nbsp;</span>Totales por Evento</a></li>
+                    <li wicket:id="divider2" class="divider"></li>
+                    <li wicket:id="posicionLink"><a href="posicion"><span class="glyphicon glyphicon-stats">&nbsp;</span>Posici&oacute;n</a></li>
+                    <li wicket:id="dividerReportesVentas" class="divider"></li>
+                    <li wicket:id="headerReportesVentas" class="text-info"><b><em>&nbsp REPORTES VENTAS</em></b></li>
+                    <li wicket:id="subdiarioVentasLink"><a href="subdiarioVentas"><span class="glyphicon glyphicon-stats">&nbsp;</span>Subdiario de Ventas</a></li>
+                    <li wicket:id="pendientesFactLink"><a href="pendientesFact"><span class="glyphicon glyphicon-stats">&nbsp;</span>Pendientes de Facturacion</a></li>
+                    <li wicket:id="deudasXClienteLink"><a href="deudasXCliente"><span class="glyphicon glyphicon-stats">&nbsp;</span>Deudas por Cliente</a></li>
+                    <li wicket:id="ventasMensualXClienteLink"><a href="ventasMensualXCliente"><span class="glyphicon glyphicon-stats">&nbsp;</span>Ventas Mensuales por Cliente</a></li>
+                    <li wicket:id="chequesCarteraLink"><a href="chequesCartera"><span class="glyphicon glyphicon-stats">&nbsp;</span>Cheques en Cartera</a></li>
+                  </ul>
+                </li>
+                <li wicket:id="configuracionDropDown" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuraci&oacute;n <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li wicket:id="editarPerfilLink"><a href="#"><span class="glyphicon glyphicon-wrench">&nbsp;</span>Editar Perfil</a></li>
+                    <li wicket:id="cambiarClaveLink"><a href="cambiarClave"><span class="glyphicon glyphicon-eye-close">&nbsp;</span>Cambiar Clave</a></li>
+                    <li wicket:id="usuariosLink"><a href="usuarios"><span class="glyphicon glyphicon-user">&nbsp;</span>Usuarios</a></li>
+					<li wicket:id="dividerConfiguracionAvanzada" class="divider"></li>
+                    <li wicket:id="headerConfiguracionAvanzada" class="dropdown-header">Configuraci&oacute;n avanzada</li>
+					<li wicket:id="cargaHorasLink"><a href="cargaHoras"><span class="glyphicon glyphicon-tasks">&nbsp;</span>Carga Horas</a></li>
+					<li wicket:id="configLink"><a href="config"><span class="glyphicon glyphicon-cog">&nbsp;</span>Config</a></li>
+					<li wicket:id="bancosLink"><a href="bancos"><span class="glyphicon glyphicon-tasks">&nbsp;</span>Bancos</a></li>
+                  </ul>
+                </li>
+              </ul>
+			  <ul class="nav navbar-nav navbar-right">
+                <li><a wicket:id="signOutLink" href="#cerrarSesion" title="Cerrar Sesi&oacute;n"><span class="glyphicon glyphicon-off text-warning">&nbsp;</span><small><span wicket:id="usuarioLogueado"></span></small></a></li>
+			  </ul>
+            </div>
+          </div>
+        </div>
+</wicket:panel>

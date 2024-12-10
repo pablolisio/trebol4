@@ -1,0 +1,16 @@
+AUTOINCREMENTAR CONTADOR:
+
+--creo la secuencia
+CREATE SEQUENCE test_seq;
+
+--Luego se hace el create table -> Ej. Creo tabla "test";
+--Luego se modifica el default value de la columna a autoincrementar: nextval('test_seq')
+
+--altero la secuencia para que pertenezca a la columna ID de la tabla creada
+ALTER SEQUENCE test_seq owned by test.id;
+
+
+--para restartear el contador de la secuencia y que arranque desde el 1
+ALTER SEQUENCE test_seq RESTART WITH 1;
+
+_____

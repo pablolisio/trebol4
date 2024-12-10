@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+    
+    	<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Texto Alerta</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			<a href="detalle-caja-chica" role="button" class="btn btn-info pull-right">Ver Detalle Caja Chica <span class="glyphicon glyphicon-share-alt"></span></a>
+				<h2 class="panel-title">
+					<img src="images/caja-chica-64.png" alt="Caja Chica"/>
+					Caja Chica			
+					<small>Carga de datos</small>		
+				</h2>
+			</div>
+			<div class="panel-body">
+			
+			
+				<form class="form-horizontal" role="form" wicket:id="form">
+				  <div class="errorLogin" wicket:id="feedback"></div>
+				  <div class="form-group">
+				  </div>
+				  <div class="form-group">
+				  	<label class="col-sm-2 control-label">Mes</label>
+				    <div class="col-sm-3">
+					   <select class="form-control" wicket:id="mes"></select>
+					</div>
+				  </div>
+				  
+				  	<br/>
+				  	
+				    <div wicket:id="dataContainer">
+					  <table class="table">
+						<thead>
+							<tr>
+								<td><b>Fecha</b></td>
+								<td><b>Detalle</b></td>
+								<td class="col-xs-2"><b>Monto</b></td>
+								<td class="col-xs-2"><b>Solicitante</b></td>
+								<td class="text-center"><b>Quitar fila</b></td>
+								<td><a href="#" type="submit" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Agrega una fila nueva en la tabla." wicket:id="agregar"> <span class="glyphicon glyphicon-plus"></span> Agregar Fila</a></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaCajaChica">
+							<td>
+								<input type="text" class="form-control" placeholder="Haga click aqu&iacute;" wicket:id="datepicker" autocomplete="off"></input>
+							</td>
+							<td>
+								<input type="text" class="form-control" placeholder="Detalle" wicket:id="detalle" autocomplete="off">
+							</td>
+							<td>
+								<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control" placeholder="Monto" wicket:id="monto" autocomplete="off" onClick="this.select()"></div>
+							</td>
+							<td>
+								<select class="form-control" wicket:id="solicitante">
+								  <option>Angel</option>
+								  <option>Angela</option>
+								</select>
+							</td>
+							<td class="text-center">
+							<a href="#" type="submit" class="btn btn-danger btn-xs" role="button" wicket:id="eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+							</td>
+							</tr>
+						</tbody>
+					</table>
+				  </div>
+					
+				  <br/>
+				  <div class="form-group col-xs-10">
+				  	<button type="submit" class="btn btn-success" data-toggle="tooltip" title="Se guardar&aacute;n los datos ingresados en la grilla para el mes seleccionado." >Guardar</button>
+				  	<button class="btn btn-default" role="button" data-toggle="modal" data-target="#cancelarModal">Cancelar</button>							
+							
+							<div id="cancelarModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							        <h4 class="modal-title">Cancelar carga de detalles</h4>
+							      </div>
+							      <div class="modal-body">
+							      	<div class="alert alert-danger">
+							        	Se perder&aacute;n los datos ingresados en la grilla ya que no fueron guardados. Esta seguro que desea cancelar?
+							        </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+							        <a class="btn btn-danger" href="inicio">Si</a>
+							      </div>
+							    </div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+				  </div>
+				  
+				  
+				</form>			  
+				
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">La factura ha sido anulada.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">
+					<img src="images/factura-venta-64.png" alt="Facturas Venta"/>
+					Facturas Venta
+				</h1>
+			</div>
+			<div class="panel-body">
+			
+			    <div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                        <form class="form-horizontal" role="form">
+                        
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Cliente</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="clienteSearchAutoComplete" data-toggle="tooltip" title="Utilice la raz&oacute;n social" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="todosClientes" href="#"><small>Todos</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Evento</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="eventoSearchAutoComplete" data-toggle="tooltip" title="Utilice el nombre del evento o cliente" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="todosEventos" href="#"><small>Todos</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Fecha</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Haga click aqu&iacute;" wicket:id="datepicker" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="hoy" href="#"><small>Hoy</small></a>
+										<a wicket:id="todos" href="#"><small>Todas</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Seleccionar</label>
+								<div class="col-sm-10 checkbox" style="width: 40%;">
+								<label>
+									<input type="checkbox" wicket:id="checkSoloFacturasXCobrarYCobroParcial"><small>Solo Facturas X Cobrar y de Cobro Parcial</small>
+								</label>
+								</div>
+							</div>
+							
+                        </form>
+                        
+                    </div>
+                </div>
+                
+   				<div class="pull-left">
+					<a wicket:id="crearFacturaLink" href="registrar-factura-venta" class="btn btn-primary">Crear factura Venta</a>
+				</div>
+				<div class="row">
+    			<div wicket:id="listadoContainer">
+					<div class="pull-right">
+						<button wicket:id="generarExcel" class="btn btn-default btn-sm" role="button" data-toggle="modal">Exportar reporte <span class="glyphicon glyphicon-cloud-download"></span></button>
+					</div>
+		            <br/>
+		            <br/>
+	            
+					<div wicket:id="dataContainer">
+						<table class="table text-right">
+							<thead>
+								<tr>
+									<td class="text-center"><b>Fecha</b></td>
+									<td class="text-center"><b>Evento</b></td>
+									<td class="text-center"><b>Nro. Factura</b></td>
+									<td><b>Subtotal</b></td>
+									<td><b>IVA</b></td>
+									<td><b>Total</b></td>
+									<td><b>Estado</b></td>
+									<td class="text-center"><b>Detalles</b></td>
+									<td class="text-center"><b>Editar</b></td>
+									<!--<td><b>Anular</b></td>-->
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaFacturas">
+								<td class="text-left"><span wicket:id="fecha">fecha</span></td>
+								<td class="text-left"><span wicket:id="evento">evento</span></td>
+								<td class="text-left"><span wicket:id="nro">nro</span></td>
+								<td><span wicket:id="subtotal">subtotal</span></td>
+								<td><span wicket:id="iva">iva</span></td>
+								<td><span wicket:id="total">total</span></td>
+								<td><span wicket:id="estado">estado</span></td>
+								<td class="text-center"><a class="btn btn-info btn-xs" wicket:id="verDetalles" href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+								<td class="text-center">
+									<a class="btn btn-success btn-xs" wicket:id="editar" href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+								</td>
+								<!--<td>
+								<button wicket:id="botonIntentarAnular" class="btn btn-danger btn-xs" role="button" data-toggle="modal">anular</button>
+								
+								
+								<div wicket:id="anularModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								        <h4 class="modal-title">Anular Factura</h4>
+								      </div>
+								      <div class="modal-body">
+								      	<div class="alert alert-danger">
+								        	Esta seguro que desea anular la factura <span wicket:id="facturaAAnular">nro factura</span>?
+								        </div>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+								        <a class="btn btn-danger" wicket:id="anular" href="facturas">Si</a>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								
+								</td>-->
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="text-center" wicket:id="paginator"></div>
+				</div>
+				</div>
+				
+				<p class="text-muted text-center" wicket:id="msjFiltrar"><em>Utilice los filtros de b&uacute;squeda para mostrar listado...</em></p>
+					
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+				
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

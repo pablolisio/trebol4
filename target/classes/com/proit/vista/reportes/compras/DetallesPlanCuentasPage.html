@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/reportes.png" alt="Reportes"/>
+					Reportes
+					<small>Plan de Cuentas - Detalle</small>
+				</h2>
+			</div>
+			<div class="panel-body">
+    
+    			<div class="row alert alert-warning">
+    				<div class="row">
+					  <div class="col-md-6">Plan de Cuentas: <strong><span wicket:id="planCuenta">plan</span></strong></div>
+					  <div class="col-md-3">Mes: <strong><span wicket:id="mes">mes</span></strong></div>
+					  <div class="col-md-3">Total: <strong><span wicket:id="total">total</span></strong></div>
+					</div>
+				</div>
+					
+	            <div class="row">
+	            	<button wicket:id="generarExcel" class="btn btn-default btn-sm pull-right" role="button" data-toggle="popover" data-placement="right" data-content="Puede demorar algunos minutos. Debe hacer click y esperar a que el reporte se genere sin tocar nada.">Exportar reporte <span class="glyphicon glyphicon-cloud-download"></span></button>
+					<div wicket:id="dataContainer">
+						<table class="table">
+							<thead>
+								<tr>
+									<td style="width: 40%;"><b>Proveedor</b></td>
+									<td><b>Nro. Orden</b></td>
+									<td><b>Fecha OP</b></td>
+									<td><b>Modo Pago</b></td>
+									<td><b>Facturas</b></td>
+									<td class="text-right"><b>Total Pago</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaFacturaOrdenPago">
+									<td><span wicket:id="proveedor">proveedor</span></td>
+									<td><span wicket:id="nroOP">nroOP</span></td>
+									<td><span wicket:id="fechaOP">fechaOP</span></td>
+									<td><span wicket:id="modoPago">modoPago</span></td>
+									<td><span wicket:id="facturasAsociadas">facturasAsociadas</span></td>
+									<td class="text-right"><span wicket:id="totalAPagar" class="text-default"></span></td>
+								</tr>
+								<tr class="active">
+									<td><strong>Pagado</strong></td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right"><strong><span wicket:id="sumaPagadoTotal"></span></strong></td>									
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<a href="reportePlanCuentasMensual" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,1988 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+DROP DATABASE "FacturarOnLineDB";
+--
+-- Name: FacturarOnLineDB; Type: DATABASE; Schema: -; Owner: facturaronline
+--
+
+CREATE DATABASE "FacturarOnLineDB" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8';
+
+
+ALTER DATABASE "FacturarOnLineDB" OWNER TO facturaronline;
+
+\connect "FacturarOnLineDB"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: banco; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE banco (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255) NOT NULL
+);
+
+
+ALTER TABLE banco OWNER TO facturaronline;
+
+--
+-- Name: banco_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE banco_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE banco_id_seq OWNER TO facturaronline;
+
+--
+-- Name: banco_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE banco_id_seq OWNED BY banco.id;
+
+
+--
+-- Name: carga_hs; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE carga_hs (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    detalle character varying(255) NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    monto numeric NOT NULL
+);
+
+
+ALTER TABLE carga_hs OWNER TO facturaronline;
+
+--
+-- Name: carga_hs_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE carga_hs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE carga_hs_id_seq OWNER TO facturaronline;
+
+--
+-- Name: carga_hs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE carga_hs_id_seq OWNED BY carga_hs.id;
+
+
+--
+-- Name: cobro_alternativo; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE cobro_alternativo (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    titular character varying(255) NOT NULL,
+    cuit_cuil character varying(13) NOT NULL,
+    cuenta_bancaria_id integer NOT NULL,
+    proveedor_id integer NOT NULL
+);
+
+
+ALTER TABLE cobro_alternativo OWNER TO facturaronline;
+
+--
+-- Name: cobro_alternativo_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE cobro_alternativo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cobro_alternativo_id_seq OWNER TO facturaronline;
+
+--
+-- Name: cobro_alternativo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE cobro_alternativo_id_seq OWNED BY cobro_alternativo.id;
+
+
+--
+-- Name: cuenta_bancaria; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE cuenta_bancaria (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    tipo_cuenta_id integer,
+    nro_cuenta character varying(255),
+    banco_id integer,
+    cbu character varying(22) NOT NULL
+);
+
+
+ALTER TABLE cuenta_bancaria OWNER TO facturaronline;
+
+--
+-- Name: cuenta_bancaria_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE cuenta_bancaria_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE cuenta_bancaria_id_seq OWNER TO facturaronline;
+
+--
+-- Name: cuenta_bancaria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE cuenta_bancaria_id_seq OWNED BY cuenta_bancaria.id;
+
+
+--
+-- Name: estado_factura; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE estado_factura (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255),
+    descripcion character varying(255)
+);
+
+
+ALTER TABLE estado_factura OWNER TO facturaronline;
+
+--
+-- Name: estado_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE estado_factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE estado_factura_id_seq OWNER TO facturaronline;
+
+--
+-- Name: estado_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE estado_factura_id_seq OWNED BY estado_factura.id;
+
+
+--
+-- Name: evento; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE evento (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255) NOT NULL
+);
+
+
+ALTER TABLE evento OWNER TO facturaronline;
+
+--
+-- Name: evento_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE evento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE evento_id_seq OWNER TO facturaronline;
+
+--
+-- Name: evento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE evento_id_seq OWNED BY evento.id;
+
+
+--
+-- Name: factura; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE factura (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    mes_impositivo timestamp without time zone NOT NULL,
+    proveedor_id integer NOT NULL,
+    nro character varying(255) NOT NULL,
+    subtotal numeric NOT NULL,
+    iva numeric NOT NULL,
+    perc_iva numeric,
+    perc_iibb numeric,
+    estado_factura_id integer NOT NULL,
+    tipo_factura_id integer NOT NULL
+);
+
+
+ALTER TABLE factura OWNER TO facturaronline;
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE factura_id_seq OWNER TO facturaronline;
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE factura_id_seq OWNED BY factura.id;
+
+
+--
+-- Name: factura_orden_pago; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE factura_orden_pago (
+    factura_id integer NOT NULL,
+    orden_pago_id integer NOT NULL,
+    borrado boolean NOT NULL
+);
+
+
+ALTER TABLE factura_orden_pago OWNER TO facturaronline;
+
+--
+-- Name: gasto; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE gasto (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    detalle character varying(255) NOT NULL,
+    mes date NOT NULL,
+    monto numeric NOT NULL,
+    sistema_id integer
+);
+
+
+ALTER TABLE gasto OWNER TO facturaronline;
+
+--
+-- Name: gasto_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE gasto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE gasto_id_seq OWNER TO facturaronline;
+
+--
+-- Name: gasto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE gasto_id_seq OWNED BY gasto.id;
+
+
+--
+-- Name: modo_pago; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE modo_pago (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255),
+    descripcion character varying(255)
+);
+
+
+ALTER TABLE modo_pago OWNER TO facturaronline;
+
+--
+-- Name: modo_pago_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE modo_pago_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE modo_pago_id_seq OWNER TO facturaronline;
+
+--
+-- Name: modo_pago_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE modo_pago_id_seq OWNED BY modo_pago.id;
+
+
+--
+-- Name: orden_pago; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE orden_pago (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    fecha timestamp without time zone NOT NULL,
+    nro character varying(255) NOT NULL,
+    evento_id integer NOT NULL,
+    concepto character varying(255),
+    solicitante_id integer NOT NULL
+);
+
+
+ALTER TABLE orden_pago OWNER TO facturaronline;
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE orden_pago_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE orden_pago_id_seq OWNER TO facturaronline;
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE orden_pago_id_seq OWNED BY orden_pago.id;
+
+
+--
+-- Name: pago; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE pago (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    modo_pago_id integer NOT NULL,
+    nro_cheque character varying(255),
+    banco_id integer,
+    fecha_cheque timestamp without time zone,
+    cobro_alternativo_id integer,
+    cuenta_bancaria_id integer,
+    importe numeric NOT NULL,
+    orden_pago_id integer NOT NULL,
+    cuit_cuil character varying(13)
+);
+
+
+ALTER TABLE pago OWNER TO facturaronline;
+
+--
+-- Name: pago_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE pago_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pago_id_seq OWNER TO facturaronline;
+
+--
+-- Name: pago_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE pago_id_seq OWNED BY pago.id;
+
+
+--
+-- Name: plan; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE plan (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    descripcion character varying(255),
+    nombre_plan character varying(255) NOT NULL,
+    precio numeric
+);
+
+
+ALTER TABLE plan OWNER TO facturaronline;
+
+--
+-- Name: plan_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE plan_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE plan_id_seq OWNER TO facturaronline;
+
+--
+-- Name: plan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE plan_id_seq OWNED BY plan.id;
+
+
+--
+-- Name: proveedor; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE proveedor (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    razon_social character varying(255) NOT NULL,
+    cuit_cuil character varying(13),
+    cuenta_bancaria_id integer,
+    mascara_modo_pago integer NOT NULL
+);
+
+
+ALTER TABLE proveedor OWNER TO facturaronline;
+
+--
+-- Name: proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE proveedor_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE proveedor_id_seq OWNER TO facturaronline;
+
+--
+-- Name: proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE proveedor_id_seq OWNED BY proveedor.id;
+
+
+--
+-- Name: rol; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE rol (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    descripcion character varying(255),
+    nombre_rol character varying(255) NOT NULL
+);
+
+
+ALTER TABLE rol OWNER TO facturaronline;
+
+--
+-- Name: rol_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE rol_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE rol_id_seq OWNER TO facturaronline;
+
+--
+-- Name: rol_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE rol_id_seq OWNED BY rol.id;
+
+
+--
+-- Name: sistema; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE sistema (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    direccion character varying(255),
+    meses_en_deuda character varying(255),
+    administrador_id integer,
+    plan_id integer
+);
+
+
+ALTER TABLE sistema OWNER TO facturaronline;
+
+--
+-- Name: sistema_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE sistema_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE sistema_id_seq OWNER TO facturaronline;
+
+--
+-- Name: sistema_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE sistema_id_seq OWNED BY sistema.id;
+
+
+--
+-- Name: solicitante; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE solicitante (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255) NOT NULL
+);
+
+
+ALTER TABLE solicitante OWNER TO facturaronline;
+
+--
+-- Name: solicitante_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE solicitante_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE solicitante_id_seq OWNER TO facturaronline;
+
+--
+-- Name: solicitante_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE solicitante_id_seq OWNED BY solicitante.id;
+
+
+--
+-- Name: tipo_cuenta; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE tipo_cuenta (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255),
+    descripcion character varying(255)
+);
+
+
+ALTER TABLE tipo_cuenta OWNER TO facturaronline;
+
+--
+-- Name: tipo_cuenta_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE tipo_cuenta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tipo_cuenta_id_seq OWNER TO facturaronline;
+
+--
+-- Name: tipo_cuenta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE tipo_cuenta_id_seq OWNED BY tipo_cuenta.id;
+
+
+--
+-- Name: tipo_factura; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE tipo_factura (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    nombre character varying(255),
+    descripcion character varying(255)
+);
+
+
+ALTER TABLE tipo_factura OWNER TO facturaronline;
+
+--
+-- Name: tipo_factura_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE tipo_factura_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tipo_factura_id_seq OWNER TO facturaronline;
+
+--
+-- Name: tipo_factura_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE tipo_factura_id_seq OWNED BY tipo_factura.id;
+
+
+--
+-- Name: usuario; Type: TABLE; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    id integer NOT NULL,
+    borrado boolean NOT NULL,
+    apellido character varying(255),
+    clave character varying(255) NOT NULL,
+    email character varying(255) NOT NULL,
+    nombre_o_razon_social character varying(255),
+    telefono character varying(255),
+    rol_id integer NOT NULL,
+    sistema_id integer,
+    activacion character varying(255)
+);
+
+
+ALTER TABLE usuario OWNER TO facturaronline;
+
+--
+-- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: facturaronline
+--
+
+CREATE SEQUENCE usuario_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE usuario_id_seq OWNER TO facturaronline;
+
+--
+-- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: facturaronline
+--
+
+ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY banco ALTER COLUMN id SET DEFAULT nextval('banco_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY carga_hs ALTER COLUMN id SET DEFAULT nextval('carga_hs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY cobro_alternativo ALTER COLUMN id SET DEFAULT nextval('cobro_alternativo_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY cuenta_bancaria ALTER COLUMN id SET DEFAULT nextval('cuenta_bancaria_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY estado_factura ALTER COLUMN id SET DEFAULT nextval('estado_factura_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY evento ALTER COLUMN id SET DEFAULT nextval('evento_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY factura ALTER COLUMN id SET DEFAULT nextval('factura_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY gasto ALTER COLUMN id SET DEFAULT nextval('gasto_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY modo_pago ALTER COLUMN id SET DEFAULT nextval('modo_pago_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY orden_pago ALTER COLUMN id SET DEFAULT nextval('orden_pago_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY pago ALTER COLUMN id SET DEFAULT nextval('pago_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY plan ALTER COLUMN id SET DEFAULT nextval('plan_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY proveedor ALTER COLUMN id SET DEFAULT nextval('proveedor_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY rol ALTER COLUMN id SET DEFAULT nextval('rol_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY sistema ALTER COLUMN id SET DEFAULT nextval('sistema_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY solicitante ALTER COLUMN id SET DEFAULT nextval('solicitante_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY tipo_cuenta ALTER COLUMN id SET DEFAULT nextval('tipo_cuenta_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY tipo_factura ALTER COLUMN id SET DEFAULT nextval('tipo_factura_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
+
+
+--
+-- Data for Name: banco; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO banco (id, borrado, nombre) VALUES (3, false, 'CitiBank');
+INSERT INTO banco (id, borrado, nombre) VALUES (1, false, 'Santander Rio');
+INSERT INTO banco (id, borrado, nombre) VALUES (2, false, 'Ciudad');
+INSERT INTO banco (id, borrado, nombre) VALUES (4, true, 'Galicia');
+
+
+--
+-- Name: banco_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('banco_id_seq', 4, true);
+
+
+--
+-- Data for Name: carga_hs; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (3, false, 'Pagina de Carga de Horas', '2015-09-26 02:06:49.778', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (4, true, 'borrar', '2015-09-26 02:06:57.84', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (2, false, 'Pagina Login', '2015-09-24 02:04:37.946', 2);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (5, false, 'Fin Pagina carga hs', '2015-09-27 00:23:28.887', 0.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (7, false, 'Arreglos varios y pagina Bancos', '2015-09-28 09:41:35.353', 1.3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (8, false, 'Tablas fijas: Modo de Pago, Tipo Cuenta, Estados de Factura', '2015-10-02 10:15:56.894', 1.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (6, true, 'borrar', '2015-09-27 00:24:47.238', 12);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (1, false, 'Investigacion inicial / pensar idea / arquitectura', '2015-09-22 02:04:19.193', 2);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (10, false, 'continuacion Proveedores', '2015-10-04 21:44:16.901', 8);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (9, true, 'Inicio de armado de Proveedores', '2015-10-02 10:16:03.408', 3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (11, false, 'proveedores: ppio cobros alternativos y demas', '2015-10-28 01:26:13.053', 4);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (12, false, 'desarrollo de Cobros Alternativos', '2015-10-28 13:28:39.965', 2);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (13, false, 'fin cobros alternativos + bug fixing', '2015-10-29 00:59:33.501', 4);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (14, false, 'validaciones varias', '2015-10-29 18:14:40.678', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (15, false, 'validaciones carga proveedores', '2015-10-30 01:49:41.42', 2);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (16, false, 'beautifications', '2015-10-30 13:53:57.905', 0.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (17, false, 'inicio facturas', '2015-11-01 23:49:27.46', 6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (18, false, 'continuacion facturas', '2015-11-02 01:33:13.409', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (19, false, 'continuacion facturas 2', '2015-11-02 12:15:49.101', 3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (20, false, 'continuacion facturas 3', '2015-11-03 19:27:24.885', 1.6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (21, false, 'validaciones carga facturas', '2015-11-03 22:38:49.548', 2.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (22, false, 'fin facturas', '2015-11-04 01:49:12.272', 1.75);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (23, false, 'comienzo desarrollo ordenes de pago', '2015-11-05 13:12:22.581', 4);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (24, false, 'inicio idea ordenes de pago', '2015-11-08 17:08:13.002', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (25, false, 'inicio desarrollo Idea de Ordenes de Pago', '2015-11-09 12:17:17.85', 3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (26, false, 'arreglos varios Ordenes de Pago', '2015-11-09 22:40:18.993', 1.25);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (27, false, 'intento de mostrar importes con mismo formato', '2015-11-11 03:22:14.524', 2.55);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (28, false, 'TODOS los importes van con dos decimales, si es entero agregar (.00)', '2015-11-12 01:45:53.287', 0.75);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (29, false, 'comienzo desarrollo del 3er paso para op normal', '2015-11-12 12:14:19.917', 2.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (30, false, 'continuacion desarrollo del 3er paso para op normal', '2015-11-17 12:50:21.255', 13.3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (31, false, 'arreglos varios Ordenes de Pago Normal', '2015-11-17 19:28:40.396', 2.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (32, false, 'inicio 4to paso carga OP Normal', '2015-11-18 09:22:45.459', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (33, false, 'continuacion 4to paso y arreglos para persistencia de OP Normal', '2015-11-18 17:31:08.563', 4);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (34, false, 'Agregue concepto, evento, solicitado por a carga de OP Normal', '2015-11-18 18:19:39.464', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (35, false, 'desarrollo ult pagina de OP Normal', '2015-11-19 10:55:00.433', 2.1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (36, false, 'Varias validaciones carga OP Normal', '2015-11-20 12:08:03.187', 4);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (37, false, 'Varias validaciones carga OP Normal 2', '2015-11-20 19:52:43.472', 0.7);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (38, false, 'mas validaciones carga OP Normal , y armado de visibilidades de Modos Pago segun corresponde', '2015-11-23 10:26:35.644', 2);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (39, false, 'Ahora al crear una nueva OP , se guarda el estado de la factura Cancelada o Pagada parcial segun corresponda', '2015-11-23 12:25:31.57', 1);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (40, false, 'Ahora se calculan los importes netos (por si es una fact pagada parcial), tb agregue btn volver en la ultima pag de creacion de OP normal', '2015-11-23 16:53:00.742', 1.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (41, false, 'Arreglo de Many-to-Many. Tb implementacion de Delete de OPs, y arreglos para carga de OPs Normales', '2015-11-25 10:41:16.39', 8.4);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (42, false, 'Implementacion de creacion de OPs CP y SF , OPs SP y SF, arreglos de los filtros de listado de OPs', '2015-11-26 11:30:34.843', 6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (43, false, 'agregado de los nuevos tipos de ModoPago Tarjeta Credito y Transf para OP_SPySF. Tb arreglos varios', '2015-11-26 22:25:17.469', 5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (44, false, 'No permito editar facturas ni OP -> Pero sí dejo "ver detalles"', '2015-11-30 15:43:40.485', 2.3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (45, false, 'comienzo de armado de reportes (excel), y arreglos varios', '2015-12-09 10:16:50.926', 15.6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (46, false, 'ahora el excel de op se genera en los 3 tipos de ops . tb arregle bug de listado de OPs en el paginado y los filtros', '2015-12-09 15:45:20.081', 2.6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (47, false, 'export de listado facturas', '2015-12-10 01:07:01.034', 0.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (48, false, 'Agregado de MesImpositivo a la factura, y desarrollo de Reporte Subdiario', '2015-12-13 21:31:59.081', 6.6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (49, false, 'arreglos varios Menu y agregado de reporte Deudas vs Pagos', '2015-12-14 12:56:46.456', 3.5);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (50, false, 'Download Archivos', '2015-12-15 18:14:05.133', 3.6);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (51, false, 'Detalles Finales', '2015-12-16 21:39:17.111', 3);
+INSERT INTO carga_hs (id, borrado, detalle, fecha, monto) VALUES (52, false, 'Arreglo BUG en el listado de OPs, ahora andan bien los filtros, paginados y se muestra ordenado por Nro OP descendente', '2015-12-17 12:07:24.427', 3);
+
+
+--
+-- Name: carga_hs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('carga_hs_id_seq', 52, true);
+
+
+--
+-- Data for Name: cobro_alternativo; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+
+
+--
+-- Name: cobro_alternativo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('cobro_alternativo_id_seq', 1, false);
+
+
+--
+-- Data for Name: cuenta_bancaria; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (1, false, NULL, NULL, NULL, '0167777100001901894491');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (2, false, NULL, NULL, NULL, '0070235720000001359853');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (3, false, NULL, NULL, NULL, '0720087820000000359304');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (4, false, NULL, NULL, NULL, '0720321120000000504872');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (5, false, NULL, NULL, NULL, '0150925402000101320500');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (6, false, NULL, NULL, NULL, '0070999020000052497944');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (7, false, NULL, NULL, NULL, '0200424611000030216758');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (8, false, NULL, '10139/0', 1, '0720207220000001013904');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (9, false, NULL, NULL, NULL, '0167777100002088935216');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (10, false, NULL, NULL, NULL, '0720005220000001353268');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (11, false, NULL, NULL, NULL, '0070372520000000409566');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (12, false, NULL, NULL, NULL, '1500625900062560590982');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (13, false, NULL, NULL, NULL, '0110458930045802655215');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (14, false, NULL, NULL, NULL, '0110521630052111204115');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (15, false, NULL, NULL, NULL, '0270101710003729280011');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (16, false, NULL, '7133-8 039-4 SUC 039', NULL, '0070039920000007133846');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (17, false, NULL, NULL, NULL, '0340045600104806751017');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (18, false, NULL, NULL, NULL, '0270101710012946630024');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (19, false, NULL, NULL, NULL, '0200424611000030061358');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (20, false, NULL, NULL, NULL, '0200424601000000065965');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (21, false, NULL, NULL, NULL, '0720034220000000290922');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (22, false, NULL, NULL, NULL, '0270054010000429080013');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (23, false, NULL, NULL, NULL, '3300008210080036541059');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (24, false, NULL, NULL, NULL, '0720496220000000125886');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (25, false, NULL, NULL, NULL, '0070050430004019159019');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (26, false, NULL, NULL, NULL, '0720049620000000302322');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (27, false, NULL, NULL, NULL, '0720455988000035133540');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (28, false, NULL, NULL, NULL, '2850850230000000106105');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (29, false, NULL, NULL, NULL, '0070176730004018629531');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (30, false, NULL, NULL, NULL, '0170356420000030537712');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (31, false, NULL, NULL, NULL, '0720242388000036404540');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (32, false, NULL, NULL, NULL, '0070176720000003096640');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (33, false, NULL, NULL, NULL, '0170339740000062476793');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (34, false, NULL, NULL, NULL, '0720452820000000039486');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (35, false, NULL, NULL, NULL, '0720100088000036613290');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (36, false, NULL, NULL, NULL, '0110213230021392937315');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (37, false, NULL, NULL, NULL, '0170276920000000268299');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (38, false, NULL, NULL, NULL, '0070181120000003021839');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (39, false, NULL, NULL, NULL, '0150537502000000170570');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (40, false, NULL, NULL, NULL, '0070365730004001055312');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (41, false, NULL, NULL, NULL, '0170318240000072169298');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (42, false, NULL, NULL, NULL, '0150849701000113696001');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (43, false, NULL, NULL, NULL, '1910131855013101276078');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (44, false, NULL, NULL, NULL, '0720053388000037134718');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (45, false, NULL, NULL, NULL, '0070019120000010656217');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (46, false, NULL, NULL, NULL, '3300000620000785490083');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (47, false, NULL, NULL, NULL, '0110134430013411668115');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (48, false, NULL, NULL, NULL, '1910011755001100472450');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (49, false, NULL, NULL, NULL, '0170470320000000067841');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (50, false, NULL, NULL, NULL, '2590047920091477830146');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (51, false, NULL, NULL, NULL, '0070007820000014587700');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (52, false, NULL, NULL, NULL, '0170478920000000182371');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (53, false, NULL, NULL, NULL, '0720217188000035746290');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (54, false, NULL, NULL, NULL, '0290039110000000265125');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (55, false, NULL, NULL, NULL, '0070526430004001049900');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (56, false, NULL, NULL, NULL, '1500020600007032021728');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (57, false, NULL, NULL, NULL, '0150513901000124052036');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (58, false, NULL, NULL, NULL, '0070145330004005545169');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (59, false, NULL, NULL, NULL, '2850159430094092359411');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (60, false, NULL, NULL, NULL, '1910029255102901453403');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (61, false, NULL, NULL, NULL, '2850124230000240002315');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (62, false, NULL, NULL, NULL, '0150521402000103259105');
+INSERT INTO cuenta_bancaria (id, borrado, tipo_cuenta_id, nro_cuenta, banco_id, cbu) VALUES (63, false, NULL, NULL, NULL, '2850303340094796249918');
+
+
+--
+-- Name: cuenta_bancaria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('cuenta_bancaria_id_seq', 63, true);
+
+
+--
+-- Data for Name: estado_factura; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO estado_factura (id, borrado, nombre, descripcion) VALUES (1, false, 'Pendiente de Pago', 'Pendiente de Pago');
+INSERT INTO estado_factura (id, borrado, nombre, descripcion) VALUES (2, false, 'Cancelada', 'Cancelada');
+INSERT INTO estado_factura (id, borrado, nombre, descripcion) VALUES (3, false, 'Pagada Parcial', 'Pagada Parcial');
+
+
+--
+-- Name: estado_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('estado_factura_id_seq', 3, true);
+
+
+--
+-- Data for Name: evento; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO evento (id, borrado, nombre) VALUES (1, false, 'Otros/Varios');
+INSERT INTO evento (id, borrado, nombre) VALUES (2, false, 'Kids Tour');
+INSERT INTO evento (id, borrado, nombre) VALUES (3, false, 'Convención');
+INSERT INTO evento (id, borrado, nombre) VALUES (4, false, 'Stock');
+INSERT INTO evento (id, borrado, nombre) VALUES (5, false, 'Dashboard');
+INSERT INTO evento (id, borrado, nombre) VALUES (6, false, 'Fiesta Fin de Año');
+INSERT INTO evento (id, borrado, nombre) VALUES (7, false, 'Jornadas de Capacitación');
+INSERT INTO evento (id, borrado, nombre) VALUES (8, false, 'A Campo');
+INSERT INTO evento (id, borrado, nombre) VALUES (9, false, 'Talleres');
+INSERT INTO evento (id, borrado, nombre) VALUES (10, false, 'Congreso');
+INSERT INTO evento (id, borrado, nombre) VALUES (11, false, 'Golf');
+INSERT INTO evento (id, borrado, nombre) VALUES (12, false, 'Stand');
+INSERT INTO evento (id, borrado, nombre) VALUES (13, false, 'Almuerzo');
+INSERT INTO evento (id, borrado, nombre) VALUES (14, false, 'Cena');
+INSERT INTO evento (id, borrado, nombre) VALUES (15, false, 'Noche de los Museos');
+INSERT INTO evento (id, borrado, nombre) VALUES (16, false, 'Viajes');
+INSERT INTO evento (id, borrado, nombre) VALUES (17, false, 'Adicionales');
+INSERT INTO evento (id, borrado, nombre) VALUES (18, false, 'Presentación');
+INSERT INTO evento (id, borrado, nombre) VALUES (19, false, 'Diseños');
+INSERT INTO evento (id, borrado, nombre) VALUES (20, false, 'Merchandising');
+INSERT INTO evento (id, borrado, nombre) VALUES (21, false, 'Comisión');
+INSERT INTO evento (id, borrado, nombre) VALUES (22, false, 'Long Drive');
+
+
+--
+-- Name: evento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('evento_id_seq', 22, true);
+
+
+--
+-- Data for Name: factura; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (14, false, '2016-01-04 00:00:00', '2016-01-01 00:00:00', 11, '0002-00000010', 16000, 3360, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (15, false, '2016-01-04 00:00:00', '2016-01-01 00:00:00', 12, '0013-00012707', 5413.22, 1136.78, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (16, false, '2016-01-04 00:00:00', '2016-01-01 00:00:00', 12, '0013-00012708', 4725.39, 847.61, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (17, false, '2016-01-07 00:00:00', '2016-01-01 00:00:00', 12, '0013-00012736', 6398.98, 1198.02, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (27, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 21, '0001-00000024', 4000, 840, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (8, false, '2016-01-06 00:00:00', '2016-01-01 00:00:00', 5, '0003-00001151', 12900, 2709, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (1, false, '2016-01-06 00:00:00', '2016-01-01 00:00:00', 1, '0002-00000135', 22300, 4683, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (2, false, '2016-01-01 00:00:00', '2016-01-01 00:00:00', 2, '0002-00000307', 22956.5, 0, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (3, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 4, 'S/F-00003/16', 102.7, 27.3, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (4, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 4, 'S/F-00004/16', 3792, 1008, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (5, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 4, 'S/F-00005/16', 790, 210, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (6, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 4, 'S/F-00006/16', 237, 63, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (7, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 4, 'S/F-00007/16', 790, 210, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (9, true, '2016-01-06 00:00:00', '2016-01-01 00:00:00', 6, '0041-00002355', 14013, 0, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (11, false, '2016-01-04 00:00:00', '2016-01-01 00:00:00', 7, '0033-00011394', 2712.31, 569.59, 0, 135.62, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (12, false, '2016-01-08 00:00:00', '2016-01-01 00:00:00', 9, 'S/F-00010/16', 7492.39, 1991.65, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (13, false, '2016-01-04 00:00:00', '2016-01-01 00:00:00', 10, '0002-00000118', 4485, 941.85, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (10, false, '2016-01-06 00:00:00', '2016-01-01 00:00:00', 6, '0041-00002355', 14013.39, 2942.81, 0, 700.67, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (18, false, '2016-01-06 00:00:00', '2016-01-01 00:00:00', 13, '0011-00028091', 24448.75, 50.41, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (19, false, '2016-01-09 00:00:00', '2016-01-01 00:00:00', 14, '0002-00002185', 2796.5, 587.27, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (20, false, '2015-11-25 00:00:00', '2016-01-01 00:00:00', 14, '0001-00000666', 5735, 1204.35, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (22, false, '2015-11-30 00:00:00', '2016-01-01 00:00:00', 16, '0004-00043993', 3190, 669.9, 0, 159.5, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (23, false, '2016-01-12 00:00:00', '2016-01-01 00:00:00', 17, 'S/F-00016/16', 17380, 4620, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (21, false, '2015-11-05 00:00:00', '2016-01-01 00:00:00', 15, '0050-00000175', 3034, 637.14, 0, 151.7, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (24, false, '2015-12-17 00:00:00', '2016-01-01 00:00:00', 18, '0002-00001184', 239.67, 50.33, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (25, false, '2015-12-23 00:00:00', '2016-01-01 00:00:00', 19, '0006-00016481', 272.72, 57.27, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (26, false, '2015-12-15 00:00:00', '2016-01-01 00:00:00', 20, '0007-00000294', 687.62, 144.4, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (28, false, '2016-01-07 00:00:00', '2016-01-01 00:00:00', 12, '0013-00001068', 6398.9, 1198.1, 0, 0, 2, 4);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (30, false, '2015-12-23 00:00:00', '2016-01-01 00:00:00', 23, '0001-00042250', 18000, 3780, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (34, false, '2016-01-18 00:00:00', '2016-01-01 00:00:00', 24, 'S/F-00025/16', 413.22, 86.78, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (35, false, '2016-01-18 00:00:00', '2016-01-01 00:00:00', 8, 'S/F-00026/16', 5289.26, 1110.74, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (32, false, '2015-11-03 00:00:00', '2016-01-01 00:00:00', 5, '0003-00001085', 840, 176.4, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (33, false, '2015-11-03 00:00:00', '2016-01-01 00:00:00', 5, '0003-00001086', 4680, 982.8, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (31, false, '2015-12-13 00:00:00', '2016-01-01 00:00:00', 5, '0003-00001125', 6222, 1306.62, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (36, false, '2016-01-05 00:00:00', '2016-01-01 00:00:00', 25, '0001-00000040', 6000, 0, 0, 0, 2, 3);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (37, false, '2016-01-20 00:00:00', '2016-01-01 00:00:00', 42, '6691-00007094', 589.83, 123.86, 0, 29.49, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (38, false, '2016-01-05 00:00:00', '2016-01-01 00:00:00', 43, '0117-00000389', 1231.4, 258.59, 0, 61.57, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (39, false, '2016-01-21 00:00:00', '2016-01-01 00:00:00', 5, '0003-00001162', 420, 88.2, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (40, false, '2016-01-22 00:00:00', '2016-01-01 00:00:00', 65, 'S/F-00031/16', 2289.26, 480.74, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (41, false, '2016-01-20 00:00:00', '2016-01-01 00:00:00', 66, '0002-00000365', 3941.5, 827.72, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (42, false, '2016-01-22 00:00:00', '2016-01-01 00:00:00', 67, 'S/F-00033/16', 16528.93, 3471.07, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (43, false, '2016-01-22 00:00:00', '2016-01-01 00:00:00', 31, 'S/F-00034/16', 2394.47, 502.84, 0, 0, 1, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (44, false, '2015-09-23 00:00:00', '2016-01-01 00:00:00', 68, '0206-00002310', 14840, 3116.4, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (29, false, '2016-01-14 00:00:00', '2016-01-01 00:00:00', 22, '0002-00000074', 1848, 388.08, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (45, false, '2016-01-20 00:00:00', '2016-01-01 00:00:00', 69, '0178-00001090', 30112.12, 6230.36, 0, 1928.44, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (46, false, '2016-01-19 00:00:00', '2016-01-01 00:00:00', 70, '0001-00000588', 1785, 375, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (47, false, '2016-01-15 00:00:00', '2016-01-01 00:00:00', 71, '0005-00000032', 1710.75, 359.26, 0, 0, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (48, false, '2015-12-18 00:00:00', '2016-01-01 00:00:00', 32, '0026-00002170', 2422.31, 508.69, 0, 121.11, 2, 1);
+INSERT INTO factura (id, borrado, fecha, mes_impositivo, proveedor_id, nro, subtotal, iva, perc_iva, perc_iibb, estado_factura_id, tipo_factura_id) VALUES (49, false, '2016-01-22 00:00:00', '2016-01-01 00:00:00', 86, '0002-00000153', 1200, 252, 0, 0, 2, 1);
+
+
+--
+-- Name: factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('factura_id_seq', 49, true);
+
+
+--
+-- Data for Name: factura_orden_pago; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (1, 1, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (2, 2, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (3, 3, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (4, 4, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (5, 5, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (6, 6, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (7, 7, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (11, 9, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (12, 10, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (13, 11, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (10, 8, true);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (10, 12, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (18, 13, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (22, 15, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (23, 16, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (21, 17, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (24, 18, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (25, 19, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (26, 20, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (14, 21, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (15, 22, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (16, 22, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (17, 22, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (28, 22, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (27, 23, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (30, 24, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (34, 25, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (35, 26, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (32, 27, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (33, 27, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (31, 27, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (8, 27, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (36, 28, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (37, 29, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (38, 30, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (40, 31, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (41, 32, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (42, 33, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (43, 34, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (44, 35, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (29, 36, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (45, 37, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (46, 38, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (47, 39, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (48, 40, false);
+INSERT INTO factura_orden_pago (factura_id, orden_pago_id, borrado) VALUES (49, 43, false);
+
+
+--
+-- Data for Name: gasto; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+
+
+--
+-- Name: gasto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('gasto_id_seq', 1, true);
+
+
+--
+-- Data for Name: modo_pago; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (1, false, 'Sin Factura', 'Para casos especiales donde no se trabaja con factura.');
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (2, false, 'Efectivo', NULL);
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (3, false, 'Cheque', NULL);
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (4, false, 'Transferencia', NULL);
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (5, false, 'Transferencia a tercero', NULL);
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (6, false, 'Transferencia sin proveedor', 'Usada en los casos de OP SinFact y SinProv.');
+INSERT INTO modo_pago (id, borrado, nombre, descripcion) VALUES (7, false, 'Tarjeta Credito', NULL);
+
+
+--
+-- Name: modo_pago_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('modo_pago_id_seq', 7, true);
+
+
+--
+-- Data for Name: orden_pago; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (1, false, '2016-01-08 00:00:00', '00001/16', 1, NULL, 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (2, false, '2016-01-08 00:00:00', '00002/16', 1, 'Remises', 4);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (3, false, '2016-01-08 00:00:00', '00003/16', 1, 'Remax Day Use propina', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (4, false, '2016-01-08 00:00:00', '00004/16', 1, 'Remax Retiro brokers San Nicolás - Staff', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (5, false, '2016-01-08 00:00:00', '00005/16', 1, 'Fiesta de Fin de año Buhl - Staff', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (6, false, '2016-01-08 00:00:00', '00006/16', 1, 'Celular', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (7, false, '2016-01-08 00:00:00', '00007/16', 1, 'Remax Day Use', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (9, false, '2016-01-08 00:00:00', '00009/16', 1, 'Remax Day Use 18/12', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (10, false, '2016-01-08 00:00:00', '00010/16', 16, 'Viajes nacionales', 7);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (11, false, '2016-01-08 00:00:00', '00011/16', 1, 'Mantenimiento y configuración', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (8, true, '2016-01-08 00:00:00', '00008/16', 1, 'Trebol 4 Day Use', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (12, false, '2016-01-11 00:00:00', '00012/16', 1, 'Trebol4 Day Use', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (13, false, '2016-01-11 00:00:00', '00013/16', 16, '2 Pasajes Sakima/Carmona', 7);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (14, false, '2016-01-12 00:00:00', '00014/16', 1, NULL, 8);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (15, false, '2016-01-12 00:00:00', '00015/16', 22, 'Limpieza', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (16, false, '2016-01-12 00:00:00', '00016/16', 8, 'Campo Pem-Washington, catering', 6);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (17, false, '2016-01-12 00:00:00', '00017/16', 22, 'Pelotas de golf', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (18, false, '2016-01-13 00:00:00', '00018/16', 1, 'Auriculares Angel', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (19, false, '2016-01-13 00:00:00', '00019/16', 1, 'Bidones de agua', 4);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (20, false, '2016-01-13 00:00:00', '00020/16', 1, 'Farmacia', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (21, false, '2016-01-14 00:00:00', '00021/16', 1, 'Coca Cola fotografía', 2);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (22, false, '2016-01-15 00:00:00', '00022/16', 16, 'Viajes nacionales - 4 paquetes', 7);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (23, false, '2016-01-15 00:00:00', '00023/16', 1, 'Cartel publicitario T4- Mes Enero', 5);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (24, false, '2016-01-18 00:00:00', '00024/16', 20, 'Manuales volvo', 12);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (25, false, '2016-01-18 00:00:00', '00025/16', 1, 'Celular Fc enero', 12);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (26, false, '2016-01-18 00:00:00', '00026/16', 8, 'Fotografía - Jornada campo PEM-Washington', 6);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (27, false, '2016-01-19 00:00:00', '00027/16', 1, 'Saldo', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (28, false, '2016-01-19 00:00:00', '00028/16', 22, 'Pagina del Long Drive revista', 8);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (29, false, '2016-01-21 00:00:00', '00029/16', 1, 'Compra coto oficina', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (30, false, '2016-01-21 00:00:00', '00030/16', 1, 'Ticket vendedor torres katherine', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (31, false, '2016-01-22 00:00:00', '00031/16', 1, 'Gift card Escandinavia del plata', 8);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (32, false, '2016-01-22 00:00:00', '00032/16', 1, 'Llaveros colgantes', 12);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (33, false, '2016-01-22 00:00:00', '00033/16', 1, 'Comision laura Finning', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (34, false, '2016-01-22 00:00:00', '00034/16', 8, 'Gira herbicidas y jornada PEM - traslados', 7);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (35, false, '2016-01-22 00:00:00', '00035/16', 1, 'Por ingreso de Wanda Reyes', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (36, false, '2016-01-22 00:00:00', '00036/16', 20, 'Biogenesis Bagó', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (37, false, '2016-01-22 00:00:00', '00037/16', 1, 'Remax retiro de brokers', 1);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (38, false, '2016-01-22 00:00:00', '00038/16', 1, 'Mobiliario Aimar - basf', 6);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (39, false, '2016-01-22 00:00:00', '00039/16', 1, 'Mobiliario aimar- basf', 6);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (40, false, '2016-01-22 00:00:00', '00040/16', 13, 'Hotel San Nicolas gastos', 13);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (41, false, '2016-01-26 00:00:00', '00041/16', 6, NULL, 10);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (42, false, '2016-01-26 00:00:00', '00042/16', 1, NULL, 10);
+INSERT INTO orden_pago (id, borrado, fecha, nro, evento_id, concepto, solicitante_id) VALUES (43, false, '2016-01-26 00:00:00', '00043/16', 1, 'Porta credenciales', 12);
+
+
+--
+-- Name: orden_pago_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('orden_pago_id_seq', 43, true);
+
+
+--
+-- Data for Name: pago; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (1, false, 3, '3923', 3, '2016-01-21 00:00:00', NULL, NULL, 26983, 1, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (2, false, 3, '3925', 3, '2016-01-18 00:00:00', NULL, NULL, 22956.5, 2, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (3, false, 2, NULL, NULL, NULL, NULL, NULL, 130, 3, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (4, false, 2, NULL, NULL, NULL, NULL, NULL, 4800, 4, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (5, false, 2, NULL, NULL, NULL, NULL, NULL, 1000, 5, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (6, false, 2, NULL, NULL, NULL, NULL, NULL, 300, 6, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (7, false, 2, NULL, NULL, NULL, NULL, NULL, 1000, 7, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (9, false, 4, NULL, NULL, NULL, NULL, NULL, 3417.52, 9, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (10, false, 7, NULL, NULL, NULL, NULL, NULL, 9484.04, 10, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (11, false, 3, '3922', 3, '2016-01-06 00:00:00', NULL, NULL, 5426.85, 11, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (8, true, 4, NULL, NULL, NULL, NULL, NULL, 17656.87, 8, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (12, false, 3, '3933', 3, '2016-01-21 00:00:00', NULL, NULL, 17656.87, 12, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (13, false, 4, NULL, NULL, NULL, NULL, NULL, 24499.16, 13, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (14, false, 3, '7512', 1, '2016-01-12 00:00:00', NULL, NULL, 10000, 14, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (15, false, 3, '3934', 3, '2016-01-12 00:00:00', NULL, NULL, 20000, 14, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (16, false, 4, NULL, NULL, NULL, NULL, NULL, 4019.4, 15, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (17, false, 4, NULL, NULL, NULL, NULL, NULL, 22000, 16, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (18, false, 4, NULL, NULL, NULL, NULL, NULL, 3822.84, 17, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (19, false, 2, NULL, NULL, NULL, NULL, NULL, 290, 18, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (20, false, 2, NULL, NULL, NULL, NULL, NULL, 329.99, 19, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (21, false, 2, NULL, NULL, NULL, NULL, NULL, 832.02, 20, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (22, false, 3, '3936', 3, '2016-01-19 00:00:00', NULL, NULL, 19360, 21, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (23, false, 4, NULL, NULL, NULL, NULL, NULL, 12123, 22, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (24, false, 4, NULL, NULL, NULL, NULL, NULL, 4840, 23, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (25, false, 4, NULL, NULL, NULL, NULL, NULL, 21780, 24, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (26, false, 2, NULL, NULL, NULL, NULL, NULL, 500, 25, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (27, false, 3, '3931', 3, '2016-01-15 00:00:00', NULL, NULL, 6400, 26, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (28, false, 3, '3937', 3, '2016-02-19 00:00:00', NULL, NULL, 29816.82, 27, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (29, false, 3, '3938', 3, '2016-02-06 00:00:00', NULL, NULL, 6000, 28, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (30, false, 7, NULL, NULL, NULL, NULL, NULL, 743.18, 29, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (31, false, 2, NULL, NULL, NULL, NULL, NULL, 1551.56, 30, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (32, false, 2, NULL, NULL, NULL, NULL, NULL, 2770, 31, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (33, false, 3, '3947', 3, '2016-02-04 00:00:00', NULL, NULL, 4769.22, 32, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (34, false, 3, '3945', 3, '2016-02-04 00:00:00', NULL, NULL, 20000, 33, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (35, false, 4, NULL, NULL, NULL, NULL, NULL, 2897.31, 34, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (36, false, 4, NULL, NULL, NULL, NULL, NULL, 17956.4, 35, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (37, false, 3, '3948', 3, '2016-02-14 00:00:00', NULL, NULL, 2236.08, 36, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (38, false, 3, '3946', 3, '2016-02-23 00:00:00', NULL, NULL, 38270.92, 37, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (39, false, 2, NULL, NULL, NULL, NULL, NULL, 2160, 38, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (40, false, 2, NULL, NULL, NULL, NULL, NULL, 2070.01, 39, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (41, false, 4, NULL, NULL, NULL, NULL, NULL, 3052.11, 40, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (42, false, 3, '3950', 3, '2016-02-02 00:00:00', NULL, NULL, 34000, 41, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (43, false, 3, '3951', 3, '2016-02-02 00:00:00', NULL, NULL, 30000, 41, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (44, false, 3, '3952', 3, '2016-02-02 00:00:00', NULL, NULL, 15000, 42, NULL);
+INSERT INTO pago (id, borrado, modo_pago_id, nro_cheque, banco_id, fecha_cheque, cobro_alternativo_id, cuenta_bancaria_id, importe, orden_pago_id, cuit_cuil) VALUES (45, false, 2, NULL, NULL, NULL, NULL, NULL, 1452, 43, NULL);
+
+
+--
+-- Name: pago_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('pago_id_seq', 45, true);
+
+
+--
+-- Data for Name: plan; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO plan (id, borrado, descripcion, nombre_plan, precio) VALUES (1, false, 'Es el plan más básico.', 'Básico', 0);
+
+
+--
+-- Name: plan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('plan_id_seq', 1, true);
+
+
+--
+-- Data for Name: proveedor; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (58, false, 'Débora Daniela Rosales', '27-34852782-2', 42, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (59, false, 'Coop. Agrícola Ganadera de Saladillo Limitada', '30-53281113-5', 43, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (60, false, 'Diego Israel Jaime', '23-27271920-9', 44, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (61, false, 'Alvarez Gabriel', '20-24847016-0', 45, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (62, false, 'Marino Giselle Andrea', '27-25171232-3', 46, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (63, false, 'Sebastian Ricardo Coria', '20-28779292-2', 47, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (2, false, 'De Blasi Rodolfo Valentin', '20-16057959-6', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (3, false, 'Agustin Aranguren', NULL, NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (4, false, 'Wanda Reyes', NULL, NULL, 7);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (8, false, 'Alvaro Barros', NULL, NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (64, false, 'La agencia de representaciónes artístcas S.A.', '30-71228388-9', 48, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (10, false, 'Cutrini Diego Hernan', '20-28866665-3', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (22, false, 'Porto Jorge Demian', '20-18285156-7', 9, 13);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (65, false, 'Jumbo Retail Argentina S.A.', '30-70877296-4', NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (12, false, 'Ryan''s Travel S.A.', '30-66211901-2', 3, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (13, false, 'Ricale Viajes S.R.L.', '33-60447810-9', 4, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (1, false, 'Ad Graphis Bureau Creativo S.R.L.', '30-68515636-5', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (9, false, 'Aerolineas Argentinas S.A.', '30-64140555-4', NULL, 17);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (16, false, 'Limpiolux facility services', '30-54098462-6', 6, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (18, false, 'Ibarz Enrique Manuel', NULL, NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (19, false, 'Alberto y Walter Pianetti', '30-70781655-0', NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (66, false, 'Anibal W. Fernandez', '23-16204052-9', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (23, false, 'Multi Group S.R.L.', '30-70872839-6', 10, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (24, false, 'Elena Hosmann', NULL, NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (25, false, 'Diego Martin Blejer', '20-23967436-5', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (26, false, 'Artículos Promocionales S.A.', '30-70717426-5', 11, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (27, false, 'CPDD S.R.L.', '30-71443643-7', 12, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (28, false, 'Leonidas Gaston P Yorio', '20-22680767-6', 13, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (29, false, 'Hector A. Ellena', '20-17873597-8', 14, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (30, false, 'Inalpi S.A', '30-70783085-5', 15, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (31, false, 'Mailcar S.R.L.', '30-70546336-7', 16, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (32, false, 'Servicios Portuarios S.A.', '30-60675453-8', 17, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (33, false, 'Master S.R.L.', '30-70992705-8', 18, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (34, false, 'Micheletti María', '27-93159206-3', 19, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (35, false, 'Sociedad Bomberos Voluntarios', '30-66913326-6', 20, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (11, false, 'Molo Eduardo Daniel', '20-92522406-6', 22, 13);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (38, false, 'Andino Franco Alejandro', '20-29697901-6', 24, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (39, false, 'Gargiulo Sebastian Leonel', '20-31258588-0', 25, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (41, false, 'Rosales Roberto Gabriel', '20-21511441-5', 27, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (40, false, 'New Idesas Publicidad', '30-70960665-0', 26, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (6, false, 'Jomalu S.A', '30-69964932-1', 1, 13);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (7, false, 'Frali S.A', '30-63221905-5', 2, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (14, false, 'Licopog S.A.', '30-71489503-2', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (21, false, 'Maladi S.R.L', '30-71490514-3', 8, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (36, false, 'Newsale S.R.L.', '30-70831170-3', 21, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (20, false, 'Nueva Fcia Antonello S.C.S', '30-68638733-6', NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (17, false, 'Comisión Asoc.Coop. Jardín de infantes', '20-30227363-5', 7, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (37, false, 'SOCVA Group S.R.L.', '33-70708830-9', 23, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (15, false, 'Star Golf S.R.L.', '30-70861171-5', 5, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (5, false, 'Trag S.R.L', '30-70910259-8', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (44, false, 'Giorgi Alberto Oscar', '30-60107990-5', 28, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (45, false, 'Macarron Lucas Matias', '24-25698886-7', 29, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (47, false, 'Avanzini German V.', '23-25312999-9', 31, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (48, false, 'Fernandez Hector Daniel', '20-13090134-5', 32, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (49, false, 'Roxana Eva Lombardi', '20-17749501-9', 33, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (50, false, 'Marrero catering', '30-71462319-9', 34, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (51, false, 'Juan De Dios Giacalone', '20-27931715-8', 35, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (52, false, 'Camila Soledad Illa', '27-33045758-4', 36, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (54, false, 'Yasik S.R.L.', '30-71115117-2', 38, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (55, false, 'La casa de las cajas S.A.', '30-56845110-0', 39, 1);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (56, false, 'María Laura Zambrano Paz', '27-28324910-2', 40, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (57, false, 'Adrian Eduardo Catania', '20-25558324-8', 41, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (67, false, 'Christian Muller', NULL, NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (69, false, 'Hoteles Sheraton de Argentina S.A.C.', '30-51717562-1', NULL, 5);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (70, false, 'Quilez Daniel Marcelo', '20-12801488-9', NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (72, false, 'Mariani Imaz Ulises', '20-27635683-7', 50, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (73, false, 'Astesiano y Cia', '33-52809402-9', 51, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (75, false, 'Juan Pablo Alvarez', '20-25677342-3', 53, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (76, false, 'María Jose Dulin', '20-20752074-9', 54, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (77, false, 'Pini Mariana Regina', '27-24949651-6', 55, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (78, false, 'Rudd Sergio Esteban', '20-13522556-9', 56, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (79, false, 'Guerra Adrián Pablo', '20-21535229-4', 57, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (80, false, 'Gonzalez Magali Florencia', '27-29317551-4', 58, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (81, false, 'Abasto Tucumano S.A.', '30-70938825-4', 59, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (82, false, 'Graciela M. Lazzoli', '27-16124790-7', 60, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (83, false, 'Complejo las Lajitas', '30-68133115-4', 61, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (85, false, 'Pighi Marcela Alejandra', '27-31889251-8', 63, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (68, false, 'Adecco Recursos Humanos S.A.', '33-66181499-9', 49, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (74, false, 'Natal S.A.', '30-69826241-5', 52, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (84, false, 'Kumasi S.A.', '30-71169402-8', 62, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (53, false, 'Tocbor S.A.', '30-71122768-3', 37, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (46, false, 'Winter Group S.R.L.', '33-71412740-9', 30, 9);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (43, false, 'Gax S.A.', '30-70840291-1', NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (71, false, 'Geo For S.R.L.', '30-69810723-1', NULL, 3);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (42, false, 'Coto C.I.C.S.A.', '30-54808315-6', NULL, 17);
+INSERT INTO proveedor (id, borrado, razon_social, cuit_cuil, cuenta_bancaria_id, mascara_modo_pago) VALUES (86, false, 'Lazzari Gloria Maria', '27-11644092-5', NULL, 3);
+
+
+--
+-- Name: proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('proveedor_id_seq', 86, true);
+
+
+--
+-- Data for Name: rol; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO rol (id, borrado, descripcion, nombre_rol) VALUES (1, false, 'Dueño del sistema', 'Administrador');
+INSERT INTO rol (id, borrado, descripcion, nombre_rol) VALUES (4, false, 'Desarrollador', 'Desarrollador');
+INSERT INTO rol (id, borrado, descripcion, nombre_rol) VALUES (2, false, 'Personas encargadas de administrar', 'Encargado');
+INSERT INTO rol (id, borrado, descripcion, nombre_rol) VALUES (3, false, 'Solo puede ver cosas, pero no puede editar ni crear nada', 'Solo Lectura');
+
+
+--
+-- Name: rol_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('rol_id_seq', 4, true);
+
+
+--
+-- Data for Name: sistema; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO sistema (id, borrado, direccion, meses_en_deuda, administrador_id, plan_id) VALUES (1, false, '---', '20160107105001', 1, 1);
+
+
+--
+-- Name: sistema_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('sistema_id_seq', 1, true);
+
+
+--
+-- Data for Name: solicitante; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO solicitante (id, borrado, nombre) VALUES (1, false, 'Wanda');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (2, false, 'Sofía');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (3, false, 'Angel');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (4, false, 'Santyago');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (5, false, 'Angela');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (6, false, 'Delfina');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (7, false, 'Daniela');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (8, false, 'Paul');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (9, false, 'Cristian');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (10, false, 'Juanchi');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (11, false, 'Bianca');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (12, false, 'Elena');
+INSERT INTO solicitante (id, borrado, nombre) VALUES (13, false, 'Otros');
+
+
+--
+-- Name: solicitante_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('solicitante_id_seq', 13, true);
+
+
+--
+-- Data for Name: tipo_cuenta; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO tipo_cuenta (id, borrado, nombre, descripcion) VALUES (1, false, 'Caja de Ahorro', NULL);
+INSERT INTO tipo_cuenta (id, borrado, nombre, descripcion) VALUES (2, false, 'Cuenta Corriente', NULL);
+
+
+--
+-- Name: tipo_cuenta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('tipo_cuenta_id_seq', 2, true);
+
+
+--
+-- Data for Name: tipo_factura; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO tipo_factura (id, borrado, nombre, descripcion) VALUES (1, false, 'A', 'Factura Tipo A');
+INSERT INTO tipo_factura (id, borrado, nombre, descripcion) VALUES (2, false, 'B', 'Factura Tipo B');
+INSERT INTO tipo_factura (id, borrado, nombre, descripcion) VALUES (3, false, 'C', 'Factura Tipo C');
+INSERT INTO tipo_factura (id, borrado, nombre, descripcion) VALUES (4, false, 'Nota de Credito A', 'Nota de Credito A');
+INSERT INTO tipo_factura (id, borrado, nombre, descripcion) VALUES (5, false, 'Nota de Credito B', 'Nota de Credito B');
+INSERT INTO tipo_factura (id, borrado, nombre, descripcion) VALUES (6, false, 'Nota de Credito C', 'Nota de Credito C');
+
+
+--
+-- Name: tipo_factura_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('tipo_factura_id_seq', 6, true);
+
+
+--
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: facturaronline
+--
+
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (1, false, 'Lisio', '202cb962ac59075b964b07152d234b70', 'pablo@facturaronline.com.ar', 'Pablo', '---', 4, 1, 'activado');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (2, false, 'Lisio', '202cb962ac59075b964b07152d234b70', 'angel@trebol.com.ar', 'Angel', '--', 1, 1, 'activado');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (3, false, 'Brandan', '250cf8b51c773f3f8dc8b4be867a9a02', 'angela@trebol.com.ar', 'Angela', '------------', 1, 1, '6862aa8e180150d77b44b998bbe74f71');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (5, false, 'Re', '202cb962ac59075b964b07152d234b70', 'paul@trebol.com.ar', 'Paul', '-----', 3, NULL, '23007c4e9a92779834ac9e402a130845');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (6, false, 'Reyes', '202cb962ac59075b964b07152d234b70', 'wanda@trebol.com.ar', 'Wanda', '-----', 3, NULL, 'aaef5dcc99ad6b5a26c6f6aa427a5534');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (7, false, 'Gregorini', '202cb962ac59075b964b07152d234b70', 'daniela@trebol.com.ar', 'Daniela', '-----', 3, NULL, 'daf49e2908c9966cd68708cbb0b1f8f2');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (8, false, 'Maranesi', '202cb962ac59075b964b07152d234b70', 'delfina@trebol.com.ar', 'Delfina', '-----', 3, NULL, '4f45a5375fe32d2a3c635bc048244551');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (9, false, 'Giordano', '202cb962ac59075b964b07152d234b70', 'bianca@trebol.com.ar', 'Bianca', '-----', 3, NULL, '518a61ddc0698eddec99772eb1d80911');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (10, false, 'Bordeu', '202cb962ac59075b964b07152d234b70', 'sofia@trebol.com.ar', 'Sofia', '-----', 3, NULL, 'f5baa0bdc8c51c680bb0584f0c1e710b');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (11, false, 'Brandan', '202cb962ac59075b964b07152d234b70', 'juan@trebol.com.ar', 'Juan', '-----', 3, NULL, '5d51278a2995b0d62acbc91c88b8afcc');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (12, false, 'Moreira', '202cb962ac59075b964b07152d234b70', 'santyago@trebol.com.ar', 'Santyago', '-----', 3, NULL, 'b25cc4d041dc2c2db107195262d1ac62');
+INSERT INTO usuario (id, borrado, apellido, clave, email, nombre_o_razon_social, telefono, rol_id, sistema_id, activacion) VALUES (4, false, 'Muller', '202cb962ac59075b964b07152d234b70', 'christian@trebol.com.ar', 'Christian', '-----', 3, NULL, '3f56ad4a2b269d18caf3c4e16d515203');
+
+
+--
+-- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: facturaronline
+--
+
+SELECT pg_catalog.setval('usuario_id_seq', 12, true);
+
+
+--
+-- Name: banco_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY banco
+    ADD CONSTRAINT banco_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: carga_hs_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY carga_hs
+    ADD CONSTRAINT carga_hs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cobro_alternativo_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY cobro_alternativo
+    ADD CONSTRAINT cobro_alternativo_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cuenta_bancaria_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY cuenta_bancaria
+    ADD CONSTRAINT cuenta_bancaria_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: estado_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY estado_factura
+    ADD CONSTRAINT estado_factura_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: evento_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY evento
+    ADD CONSTRAINT evento_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: factura_orden_pago_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY factura_orden_pago
+    ADD CONSTRAINT factura_orden_pago_pkey PRIMARY KEY (factura_id, orden_pago_id);
+
+
+--
+-- Name: factura_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY factura
+    ADD CONSTRAINT factura_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: gasto_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY gasto
+    ADD CONSTRAINT gasto_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: modo_pago_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY modo_pago
+    ADD CONSTRAINT modo_pago_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orden_pago_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY orden_pago
+    ADD CONSTRAINT orden_pago_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pago_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY pago
+    ADD CONSTRAINT pago_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: plan_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY plan
+    ADD CONSTRAINT plan_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY proveedor
+    ADD CONSTRAINT proveedor_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rol_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY rol
+    ADD CONSTRAINT rol_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: sistema_administrador_id_key; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY sistema
+    ADD CONSTRAINT sistema_administrador_id_key UNIQUE (administrador_id);
+
+
+--
+-- Name: sistema_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY sistema
+    ADD CONSTRAINT sistema_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: solicitante_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitante
+    ADD CONSTRAINT solicitante_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tipo_cuenta_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_cuenta
+    ADD CONSTRAINT tipo_cuenta_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: tipo_factura_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_factura
+    ADD CONSTRAINT tipo_factura_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: usuario_email_key; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_email_key UNIQUE (email);
+
+
+--
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: facturaronline; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: administrador_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY sistema
+    ADD CONSTRAINT administrador_fk FOREIGN KEY (administrador_id) REFERENCES usuario(id);
+
+
+--
+-- Name: banco_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY cuenta_bancaria
+    ADD CONSTRAINT banco_fk FOREIGN KEY (banco_id) REFERENCES banco(id);
+
+
+--
+-- Name: banco_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY pago
+    ADD CONSTRAINT banco_fk FOREIGN KEY (banco_id) REFERENCES banco(id);
+
+
+--
+-- Name: cobro_alternativo_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY pago
+    ADD CONSTRAINT cobro_alternativo_fk FOREIGN KEY (cobro_alternativo_id) REFERENCES cobro_alternativo(id);
+
+
+--
+-- Name: cuenta_bancaria_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY proveedor
+    ADD CONSTRAINT cuenta_bancaria_fk FOREIGN KEY (cuenta_bancaria_id) REFERENCES cuenta_bancaria(id);
+
+
+--
+-- Name: cuenta_bancaria_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY cobro_alternativo
+    ADD CONSTRAINT cuenta_bancaria_fk FOREIGN KEY (cuenta_bancaria_id) REFERENCES cuenta_bancaria(id);
+
+
+--
+-- Name: cuenta_bancaria_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY pago
+    ADD CONSTRAINT cuenta_bancaria_fk FOREIGN KEY (cuenta_bancaria_id) REFERENCES cuenta_bancaria(id);
+
+
+--
+-- Name: estado_factura_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY factura
+    ADD CONSTRAINT estado_factura_fk FOREIGN KEY (estado_factura_id) REFERENCES estado_factura(id);
+
+
+--
+-- Name: evento_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY orden_pago
+    ADD CONSTRAINT evento_fk FOREIGN KEY (evento_id) REFERENCES evento(id);
+
+
+--
+-- Name: factura_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY factura_orden_pago
+    ADD CONSTRAINT factura_fk FOREIGN KEY (factura_id) REFERENCES factura(id);
+
+
+--
+-- Name: modo_pago_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY pago
+    ADD CONSTRAINT modo_pago_fk FOREIGN KEY (modo_pago_id) REFERENCES modo_pago(id);
+
+
+--
+-- Name: orden_pago_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY pago
+    ADD CONSTRAINT orden_pago_fk FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
+
+
+--
+-- Name: orden_pago_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY factura_orden_pago
+    ADD CONSTRAINT orden_pago_fk FOREIGN KEY (orden_pago_id) REFERENCES orden_pago(id);
+
+
+--
+-- Name: plan_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY sistema
+    ADD CONSTRAINT plan_fk FOREIGN KEY (plan_id) REFERENCES plan(id);
+
+
+--
+-- Name: proveedor_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY cobro_alternativo
+    ADD CONSTRAINT proveedor_fk FOREIGN KEY (proveedor_id) REFERENCES proveedor(id);
+
+
+--
+-- Name: proveedor_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY factura
+    ADD CONSTRAINT proveedor_fk FOREIGN KEY (proveedor_id) REFERENCES proveedor(id);
+
+
+--
+-- Name: rol_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT rol_fk FOREIGN KEY (rol_id) REFERENCES rol(id);
+
+
+--
+-- Name: sistema_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY gasto
+    ADD CONSTRAINT sistema_fk FOREIGN KEY (sistema_id) REFERENCES sistema(id);
+
+
+--
+-- Name: sistema_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT sistema_fk FOREIGN KEY (sistema_id) REFERENCES sistema(id);
+
+
+--
+-- Name: solicitante_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY orden_pago
+    ADD CONSTRAINT solicitante_fk FOREIGN KEY (solicitante_id) REFERENCES solicitante(id);
+
+
+--
+-- Name: tipo_cuenta_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY cuenta_bancaria
+    ADD CONSTRAINT tipo_cuenta_fk FOREIGN KEY (tipo_cuenta_id) REFERENCES tipo_cuenta(id);
+
+
+--
+-- Name: tipo_factura_fk; Type: FK CONSTRAINT; Schema: public; Owner: facturaronline
+--
+
+ALTER TABLE ONLY factura
+    ADD CONSTRAINT tipo_factura_fk FOREIGN KEY (tipo_factura_id) REFERENCES tipo_factura(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

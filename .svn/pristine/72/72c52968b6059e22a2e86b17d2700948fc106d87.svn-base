@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/ordenesPago-64.png" alt="OrdenesPago"/>
+					Ordenes de Pago Sin Prov y Sin Fact
+					<small><span>Verificar Datos (Paso 5 de 5)</span></small>
+				</h2>
+			</div>
+			<div class="panel-body" style="width: 70%;">
+			
+				<form class="form-horizontal" role="form" wicket:id="form">				
+				  
+				  <table class="table table-hover">
+					<tr>
+						<td><label class="control-label">Fecha OP</label></td>
+						<td><span wicket:id="fechaOP" class="text-default"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Proveedor</label></td>
+						<td><span wicket:id="prov" class="text-warning"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Solicitado Por</label></td>
+						<td><span wicket:id="solicitadoPor" class="text-default"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Evento</label></td>
+						<td><span wicket:id="evento" class="text-default"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Plan de Cuenta</label></td>
+						<td><span wicket:id="planCuenta" class="text-default"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Concepto</label></td>
+						<td><span wicket:id="concepto" class="text-default"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Observaciones</label></td>
+						<td><span wicket:id="observaciones" class="text-default"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Referencia</label></td>
+						<td><span wicket:id="sinFactura" class="text-warning"></span></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Forma Pago</label></td>
+						<td>
+						
+							<div wicket:id="pagosContainer">
+							  	  <table class="table table-hover">
+									<thead>
+										<tr>
+											<td class="col-xs-1"><b>Tipo</b></td>
+											<td class="col-xs-3"><b>Detalle</b></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr wicket:id="listaPagos">
+											<td>
+												<span wicket:id="tipo" class="text-default"></span>
+											</td>
+											<td>
+												<span wicket:id="detalle" class="text-default"></span>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							  </div>
+							  <p class="alert alert-info pull-right">
+								  <label class="control-label">Total a Pagar: </label>
+								  <span wicket:id="totalAPagar" class="text-default"></span>
+							  </p>
+						</td>
+					</tr>
+				  </table>
+				  
+				  <div class="col-md-5 col-md-offset-9">
+				  	<button type="submit" class="btn btn-success">Crear Orden <span class="glyphicon glyphicon-thumbs-up"></span></button>
+					<a href="#" wicket:id="volverLink" class="btn btn-default btn-sm">Atr&aacute;s</a>
+				  </div>
+				</form>				
+					
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+	
+</wicket:extend>
+</body>
+</html>

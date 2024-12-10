@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+					
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div>
+    
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Alerta.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/reportes.png" alt="Reportes"/>
+					Reportes
+					<small>Duplicados</small>
+				</h2>
+			</div>
+			<div class="panel-body">
+				
+				<div wicket:id="dataContainerSolicitudFacturaVenta">				
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerAdicionalSolicitudFacturaVenta">				
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerDetalleSolicitudFacturaVenta">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerFacturaVenta">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerAdicionalFacturaVenta">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerDetalleFacturaVenta">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerCobranza">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerCobro">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerSolicitudPago">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerPagoSolicitudPago">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerFacturaSolicitudPago">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerOrdenPago">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerPago">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerEvento">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerFacturaCompra">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerUsuario">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerCliente">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerProveedor">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerPlanCuenta">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerPresupuestoCustom">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerBanco">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerCuentaBancaria">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				<div wicket:id="dataContainerCajaChica">
+					<strong><span wicket:id="tableName"></span></strong>
+					<table class="table table-bordered table-hover table-condensed text-center">
+						<thead>
+							<tr>
+								<td wicket:id="titulos">
+									<small><strong><span wicket:id="titulo">titulo</span></strong></small>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaDuplicados">
+								<td wicket:id="td">
+									<small><span wicket:id="value">value</span></small>
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+				
+				
+				
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

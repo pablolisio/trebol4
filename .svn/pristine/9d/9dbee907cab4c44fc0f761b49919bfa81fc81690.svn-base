@@ -1,0 +1,4 @@
+totalEvento.Required=Debe ingresar el Total del Evento. Al menos ingrese 0.
+costoTotal.Required=Debe ingresar el Costo Total del Evento. Al menos ingrese 0.
+totalEventoConIVA.Required=Debe ingresar el Total del Evento con IVA. Al menos ingrese 0.
+costoTotalConIVA.Required=Debe ingresar el Costo Total con IVA del Evento. Al menos ingrese 0.

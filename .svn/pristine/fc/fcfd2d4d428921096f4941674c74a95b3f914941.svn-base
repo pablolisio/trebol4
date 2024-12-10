@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/factura-venta-64.png" alt="Facturas Venta"/>
+					Facturas Venta
+					<small><span>Crear Factura Venta</span></small>
+				</h2>
+			</div>
+			
+			<div class="panel-body">
+			
+			
+				<form class="form-horizontal" role="form" wicket:id="form">				
+
+				  <div class="errorLogin" wicket:id="feedback"></div>
+				  
+				  
+				  <div class="panel panel-default">
+  					<div class="panel-heading">
+				  		Cliente
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="form-group">
+							<label class="col-sm-3 control-label">Raz&oacute;n Social<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+							<div class="col-sm-10" style="width: 40%;">
+								<input type="text" class="form-control" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="clienteSearchAutocomplete" data-toggle="tooltip" title="Utilice la raz&oacute;n social" autofocus></input>
+							</div>
+					  </div>
+					  <div class="form-group">
+					    <label class="col-sm-3 control-label">CUIT/CUIL<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+					    <div class="col-sm-10" style="width: 40%;">
+					      <input type="text" class="form-control" placeholder="Ingrese al menos 5 d&iacute;gitos" size="30" wicket:id="cuitCuilClienteSearchAutocomplete"></input>
+					    </div>
+					    <small><span id="helpBlock" class="help-block">Ejemplo Formato: 23-12345678-1</span></small>
+					  </div>
+				  	</div>
+				  </div>				  
+				  
+				  <div class="panel panel-default">
+  					<div class="panel-heading">
+				  		Detalles y Datos Adicionales
+				  	</div>
+				  	<div class="panel-body">
+				  	  <ul class="list-group">
+				      <li class="list-group-item">
+				      	<small>Detalles</small>
+				  		<a href="#" type="submit" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Agrega una fila nueva en la lista de detalles" wicket:id="agregarDetalle"> <span class="glyphicon glyphicon-plus"></span> Agregar Detalle</a>
+			    		<div wicket:id="detallesContainer">
+						  <table class="table table-striped">
+							<thead>
+								<tr>
+									<td class="col-xs-2"><b>Cantidad</b></td>
+									<td class="col-xs-6"><b>Descripci&oacute;n</b></td>
+									<td class="col-xs-3"><b>Importe sin IVA</b></td>
+									<td class="text-center"><b>Quitar fila</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaDetalles">
+									<td>
+										<input type="text" class="form-control text-right input-sm" placeholder="#" wicket:id="cantidad" autocomplete="off" onClick="this.select()">
+									</td>
+									<td>
+										<input type="text" class="form-control input-sm" placeholder="Descripci&oacute;n detalle" wicket:id="descripcion" autocomplete="off">
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-addon">$</span>
+											 <input type="text" class="form-control text-right input-sm" placeholder="Importe Sin IVA" wicket:id="importe" autocomplete="off" onClick="this.select()">
+										</div>
+									</td>
+									<td class="text-center">
+										<a href="#" type="submit" class="btn btn-danger btn-xs" role="button" wicket:id="eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					  	</div>
+					 </li>
+					 <li class="list-group-item">
+					 	<small>Datos Adicionales</small>
+					 	<br/>
+				  		<a href="#" type="submit" class="btn btn-default btn-xs pull-right" data-toggle="tooltip" title="Agrega una fila nueva en la lista de datos adicionales" wicket:id="agregarDatoAdicional"> <span class="glyphicon glyphicon-plus"></span> Agregar Dato Adicional</a>
+			    		<div wicket:id="datosAdicionalesContainer">
+			    			  <div class="form-group">
+							    	<label class="col-sm-2 control-label">N&deg; Orden de Compra</label>
+							    	<div class="col-xs-6">
+										<input type="text" class="form-control input-sm" placeholder="N&deg; Orden de Compra" size="100" wicket:id="nroOrdenCompra" autocomplete="off">
+									</div>
+								</div>
+								<div class="form-group">
+							    	<label class="col-sm-2 control-label">N&deg; Requisici&oacute;n</label>
+							    	<div class="col-xs-6">
+										<input type="text" class="form-control input-sm" placeholder="N&deg; Requisici&oacute;n" size="100" wicket:id="nroRequisicion" autocomplete="off">
+									</div>
+								</div>
+							  <table class="table table-striped">
+								<thead>
+									<tr>
+										<td class="col-xs-2"><b></b></td>
+										<td class="col-xs-6"><b></b></td>
+										<td class="col-xs-3"><b></b></td>
+										<td><b></b></td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr wicket:id="listaDatosAdicionales">
+										<td>
+										</td>
+										<td>
+											<input type="text" class="form-control input-sm" placeholder="Descripci&oacute;n dato adicional" size="100" wicket:id="descripcion" autocomplete="off">
+										</td>
+										<td>
+										</td>
+										<td class="text-center">
+											<a href="#" type="submit" class="btn btn-danger btn-xs" role="button" wicket:id="eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+					  	</div>
+					 </li>
+					 </ul>
+					  	
+					  	<ul class="list-group">
+						    <li class="list-group-item">
+							  <div class="form-group">
+							    <label class="col-sm-8 control-label">Subtotal</label>
+								    <div style="width: 90%;">
+							    		<div class="input-group"><span class="input-group-addon">$</span><input type="text" class="form-control text-right input-sm" placeholder="Importe Final" wicket:id="importeFinal" onClick="this.select()"></div>
+									</div>
+							  </div>						    
+						    </li>
+						</ul>
+						
+				  	</div>
+				  </div>
+				  
+				  <div class="panel panel-default">
+  					<div class="panel-heading">
+				  		Datos AFIP
+				  	</div>
+				  	<div class="panel-body">
+				  		<div class="form-group">
+					    	<label class="col-sm-3 control-label">Tipo Factura Vta<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+					    	<div class="col-sm-4" style="width: 30%;">
+								<select class="form-control" wicket:id="tipoFactura">
+		                           <option>A</option>
+		                           <option>B</option>
+								</select>
+							</div>
+						</div>
+				  		<div class="form-group" wicket:id="nroFacturaContainer">
+					    	<label class="col-sm-3 control-label">Nro. Factura Vta<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+					    	<div class="col-sm-4" style="width: 30%;">
+								<div class="input-group">
+						    		<span class="input-group-addon" wicket:id="nroFacturaVentaPrefix">$</span>
+						    		<input type="text" class="form-control" placeholder="Usar ultimos 4 digitos" wicket:id="nroFacturaVenta" autocomplete="off">
+					    		</div>
+							</div>
+						</div>
+						<div class="form-group">
+					    	<label class="col-sm-3 control-label">Fecha Factura Vta<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+					    	<div class="col-sm-4" style="width: 30%;">
+								<input type="text" class="form-control" placeholder="Haga click aqu&iacute;" wicket:id="datepicker"></input>
+							</div>
+							<div class="row">
+								<h6>
+									<a wicket:id="hoy" href="#"><small>Hoy</small></a>
+								</h6>
+							</div>
+						</div>
+				  		<div class="form-group">
+					    	<label class="col-sm-3 control-label">Evento<small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small></label>
+					    	<div class="col-sm-10" style="width: 40%;">
+								<input type="text" class="form-control" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="eventoSearchAutoComplete" data-toggle="tooltip" title="Utilice el nombre del evento o cliente"></input>
+							</div>
+						</div>
+						  <div class="form-group has-warning" wicket:id="facturaAAnularContainer">
+						    <label class="col-sm-3 control-label">Nro Factura a anular<small data-toggle="tooltip" title="Campo obligatorio si el Tipo de Factura es NC">&nbsp;*</small></label>
+							    <div class="col-sm-4" style="width: 30%;">
+						    		<div class="input-group">
+							    		<span class="input-group-addon" wicket:id="nroFacturaVentaPrefix2">$</span>
+							    		<input type="text" class="form-control" placeholder="Usar ultimos 4 digitos" wicket:id="nroFacturaVentaAAnular" autocomplete="off">
+						    		</div>
+								</div>
+								<small class="text-warning"><em>(Completar si el tipo de factura es NC)</em></small>
+						  </div>
+						  <div class="form-group" wicket:id="estadoContainer">
+						    <label class="col-sm-3 control-label">Estado</label>
+							    <div class="col-sm-10" style="width: 40%;">
+						    		<div class="input-group"><span class="input-group-addon" wicket:id="estado">Estado</span></div>
+								</div>
+						  </div>
+						  <div class="form-group" wicket:id="solicitudFacVtaContainer">
+						    <label class="col-sm-3 control-label">Solicitud Factura Vta Asociada</label>
+							    <div class="col-sm-10" style="width: 40%;">
+						    		<div wicket:id="solicitudFacVtaContainer2">
+								  	  <span wicket:id="detalleSolicitud" class="text-default"></span>
+								  	  <small><a href="#" wicket:id="linkSolicitud">Ver m&aacute;s <span class="glyphicon glyphicon-share-alt"></span></a></small>
+								  	</div>
+								  	<em><small><span wicket:id="sinSolicitud" class="text-muted">sinSolicitud</span></small></em>
+								</div>
+						  </div>
+				  	</div>
+				  </div>
+				  
+				  <div class="col-md-5 col-md-offset-8">
+				  	<button type="submit" class="btn btn-info" wicket:id="guardar">Crear Factura Venta <span class="glyphicon glyphicon-thumbs-up"></span></button>
+					<a href="facturasVentas" class="btn btn-default">Volver</a>
+				  </div>
+				</form>				
+					
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+	
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+					
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+    
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Alerta.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/reportes.png" alt="Reportes"/>
+					Reportes
+					<small>Totales por Proveedor</small>
+				</h2>
+			</div>
+			<div class="panel-body">
+				
+				<div wicket:id="dataContainer">
+				
+					<table class="table">
+						<thead>
+							<tr>
+								<td style="width: 70%;"><strong>Proveedor</strong></td>
+								<td class="danger"><strong>Total Deuda</strong></td>
+								<td class="active"><strong>Total Pagado</strong></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaProveedores">								
+								<td class="text-left"><span wicket:id="proveedor" data-toggle="tooltip" title="Proveedor">proveedor</span></td>
+								<td class="danger text-right"><span wicket:id="totalDeuda" data-toggle="tooltip" title="Total Deuda">totalDeuda</span></td>
+								<td class="active text-right"><span wicket:id="totalPagado" data-toggle="tooltip" title="Total Pagado">totalPagado</span></td>
+							</tr>
+							<tr class="active">
+								<td><strong>TOTALES</strong></td>
+								<td class="danger text-right"><strong><span wicket:id="sumaTotalDeuda" data-toggle="tooltip" title="Total Deuda"></span></strong></td>
+								<td class="text-right"><strong><span wicket:id="sumaTotalPagado" data-toggle="tooltip" title="Total Pagado"></span></strong></td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+				
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

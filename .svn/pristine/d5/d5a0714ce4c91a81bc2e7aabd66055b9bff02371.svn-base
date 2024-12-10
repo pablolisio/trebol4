@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">La factura ha sido eliminada.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">
+					<img src="images/facturas-64.png" alt="Facturas Compra"/>
+					Facturas Compra
+				</h1>
+			</div>
+			<div class="panel-body">
+			
+			    <div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                        <form class="form-horizontal" role="form">
+                        
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Proveedor</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Ingrese al menos 3 d&iacute;gitos" size="30" wicket:id="proveedorSearchAutoComplete" data-toggle="tooltip" title="Utilice la raz&oacute;n social" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="todosProveedores" href="#"><small>Todos</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Fecha</label>
+								<div class="col-sm-10" style="width: 40%;">
+									<input type="text" class="form-control input-sm" placeholder="Haga click aqu&iacute;" wicket:id="datepicker" autocomplete="off"></input>
+								</div>
+								<div class="row">
+									<h6>
+										<a wicket:id="hoy" href="#"><small>Hoy</small></a>
+										<a wicket:id="todos" href="#"><small>Todas</small></a>
+									</h6>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Seleccionar</label>
+								<div class="col-sm-10 checkbox" style="width: 40%;">
+								<label>
+									<input type="checkbox" wicket:id="soloFacturasPendientesYParciales"><small>Solo Facturas Pendientes de Pago y de Pago Parcial</small>
+								</label>
+								</div>
+							</div>
+							
+                        </form>
+                        
+                    </div>
+                </div>
+                
+   				<div class="pull-left">
+					<a wicket:id="crearFacturaLink" href="registrar-factura" class="btn btn-primary">Crear factura Compra</a>
+				</div>
+				<div class="row">
+    			<div wicket:id="listadoContainer">
+					<div class="pull-right">
+						<button wicket:id="generarExcel" class="btn btn-default btn-sm" role="button" data-toggle="modal">Exportar reporte <span class="glyphicon glyphicon-cloud-download"></span></button>
+					</div>
+		            <br/>
+		            <br/>
+	            
+					<div wicket:id="dataContainer">
+						<table class="table text-right">
+							<thead>
+								<tr>
+									<td><b>Fecha</b></td>
+									<td style="width: 40%;"><b>Proveedor</b></td>
+									<td><b>Nro. Factura</b></td>
+									<td><b>Total</b></td>
+									<td><b>Estado</b></td>
+									<td class="text-center"><b>Detalles</b></td>
+									<td class="text-center"><b>Eliminar</b></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr wicket:id="listaFacturas">
+								<td><span wicket:id="fecha">fecha</span></td>
+								<td><span wicket:id="proveedor">proveedor</span></td>
+								<td><span wicket:id="nro">nro</span></td>
+								<td><span wicket:id="total">total</span></td>
+								<td><span wicket:id="estado">estado</span></td>
+								<td class="text-center"><a class="btn btn-info btn-xs" wicket:id="verDetalles" href="#"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+								<td class="text-center">
+								<button wicket:id="botonIntentarEliminar" class="btn btn-danger btn-xs" role="button" data-toggle="modal"><span class="glyphicon glyphicon-trash"></span></button>
+								
+								
+								<div wicket:id="eliminarModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								        <h4 class="modal-title">Eliminar Factura</h4>
+								      </div>
+								      <div class="modal-body">
+								      	<div class="alert alert-danger">
+								        	Esta seguro que desea eliminar la factura <span wicket:id="facturaAEliminar">nro factura</span>?
+								        </div>
+								      </div>
+								      <div class="modal-footer">
+								        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+								        <a class="btn btn-danger" wicket:id="eliminar" href="facturas">Si</a>
+								      </div>
+								    </div><!-- /.modal-content -->
+								  </div><!-- /.modal-dialog -->
+								</div><!-- /.modal -->
+								
+								</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="text-center" wicket:id="paginator"></div>
+				</div>
+				</div>
+				
+				<p class="text-muted text-center" wicket:id="msjFiltrar"><em>Utilice los filtros de b&uacute;squeda para mostrar listado...</em></p>
+					
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+				
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

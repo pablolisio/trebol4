@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">La solicitud de factura ha sido eliminada.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">
+					<img src="images/solicitud-factura-64.png" alt="Solicitudes de Factura"/>
+					<span wicket:id="tituloPagina">Solicitudes de Factura Venta</span>					
+				</h1>
+			</div>
+			<div class="panel-body">
+			
+				<div class="panel panel-default">
+                    <div class="panel-body">
+                        
+                        <a wicket:id="crearSolicitudFacturaLink" href="registrar-solicitud" class="btn btn-info pull-right">Crear Solicitud Factura</a>
+                        
+                        	<div class="text-primary pull-right" wicket:id="totalSolicitudesFacturaPendientesContainer">
+								<small>
+										<strong>Total Solicitudes Pendientes: <span class="badge" wicket:id="totalSolicitudesFacturaPendientes">$123</span></strong>									
+								</small>
+							</div>
+                        <form class="form-horizontal" role="form" wicket:id="form">
+                        	
+							<div class="form-group">
+							 	<label class="col-sm-2 control-label">Evento</label>
+								<div class="col-sm-4">
+									<input type="text" wicket:id="filtroEvento" class="form-control input-sm" placeholder="Cliente / Evento" autocomplete="off">
+								</div>
+								<div class="row col-sm-1">
+									<h6>
+										<a wicket:id="buscar" href="#"><small>Buscar</small></a>
+									</h6>
+								</div>
+								<div class="row col-sm-1">
+									<h6>
+										<a wicket:id="todosEventos" href="#"><small>Borrar</small></a>
+									</h6>
+								</div>
+							</div>							
+							
+							<div class="form-group" wicket:id="solicitanteFilterContainer">
+							  	<label class="col-sm-2 control-label">Solicitante</label>
+							    <div class="col-sm-4">
+							   		<select class="form-control input-sm" wicket:id="solicitante"></select>
+								</div>
+							 </div>
+							
+							<div class="form-group">
+								<label class="col-sm-2 control-label">Seleccionar</label>
+								<div class="col-sm-4 checkbox">
+								<label>
+									<input type="checkbox" wicket:id="soloSolicitudesPendientes"><small>Solo Solicitudes Pendientes</small>
+								</label>
+								</div>
+							</div>
+							
+                        </form>
+                        
+                    </div>
+                </div>
+			    	            
+				<div wicket:id="dataContainer">
+					<table class="table">
+						<thead>
+							<tr>
+								<td><b>Solicitud</b></td>
+								<td><b>Fecha</b></td>
+								<td wicket:id="colSolicitante"><b>Solicitante</b></td>
+								<td><b>Cliente</b></td>
+								<td><b>Total</b></td>
+								<!-- <td><b>Facturas</b></td> -->
+								<td><b>Evento</b></td>
+								<td><b>Estado</b></td>
+								<td wicket:id="colOK"><b data-toggle="tooltip" title="Si tiene N&deg; Orden de Compra o N&deg; Requisici&oacute;n">OK</b></td>
+								<td><b>Ver</b></td>
+								<td class="text-center"><b>Editar</b></td>
+								<td  class="text-center" wicket:id="colConversion"><b>Convertir</b></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr wicket:id="listaSolicitudesFactura">
+							<td><span wicket:id="nroSolicitud">nro solicitud</span></td>
+							<td><span wicket:id="fecha">fecha</span></td>
+							<td wicket:id="colSolicitanteValue"><span wicket:id="solicitante">solicitante</span></td>
+							<td><span wicket:id="cliente">cliente</span></td>
+							<td class="text-right"><span wicket:id="total">total</span></td>
+							<!-- <td><span wicket:id="facturas">"facturas"</span></td>-->
+							<td><span wicket:id="evento">evento</span></td>
+							<td><span wicket:id="estado">estado</span></td>
+							<td wicket:id="colOKValue" class="text-center"><small><span wicket:id="ok">ok</span></small></td>
+							<td>
+								<a class="btn btn-default btn-xs" wicket:id="verDetalles" href="#"><span class="glyphicon glyphicon-zoom-in"></span></a>
+							</td>
+							<td class="text-center">
+								<a class="btn btn-success btn-xs" wicket:id="editar" href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+							</td>
+							<td class="text-center">
+								<a class="btn btn-warning btn-xs" wicket:id="convertirAFacVta" href="#" data-toggle="tooltip" title="Convertir a Factura Venta"><span class="glyphicon glyphicon-compressed"></span><span class="glyphicon glyphicon-share-alt"></span></a>
+							</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="text-center" wicket:id="paginator"></div>
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+		<!-- Aca se van a reemplazar si se necesita reemplazar algo en la pagina hija : Mis Solicitudes -->
+		<wicket:child />
+		
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+    
+					<style type="text/css">
+						.tableCell {
+						 font-size: 0.9em;
+						 border: 1px solid Gray;
+						 width: 100px;
+						}				
+						.headerCell {
+						 font-size: 1em;
+						 border: 1px solid Gray;
+						}
+					</style>
+					
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+    
+		<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Alerta.</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/reportes.png" alt="Reportes"/>
+					Reportes
+					<small><span wicket:id="secondaryTitle">Nombre Reporte</span></small>
+				</h2>
+			</div>
+			<div class="panel-body">
+			
+				<form class="form-horizontal" role="form" >
+				  <div class="form-group">		  
+				  	<h5 class="col-sm-10 col-md-offset-0">Seleccione Mes Desde y Mes Hasta para modificar los reportes de esta p&aacute;gina.</h5>
+				  </div>
+				  <div class="form-group">
+				  	<label class="col-sm-2 control-label">Mes desde</label>
+				    <div class="col-sm-10" style="width: 30%;">
+					   <select class="form-control" wicket:id="mesDesde"></select>
+					</div>
+					<label class="col-sm-2 control-label">Mes hasta</label>
+				    <div class="col-sm-10" style="width: 30%;">
+					   <select class="form-control" wicket:id="mesHasta"></select>
+					</div>
+				  </div>
+				</form>
+				
+
+				<div wicket:id="dataContainer">
+				
+						<div class="errorLogin" wicket:id="feedback"></div>
+						
+						<!-- Load Google Visualization API -->
+					    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+					    <script type="text/javascript">
+					      	google.load('visualization', '1', {packages: ['corechart']});
+					    	google.load('visualization', '1', {packages:['table']});
+					    	google.load('visualization', '1', {packages:['gauge']});
+					     </script>
+					     
+					     <script type="text/javascript" wicket:id="getPrimeraVez"></script>
+					     
+					     <script type="text/javascript">
+							function drawChartAndTable(chartType, chartID, tableID, dataArray, optionsChart) {
+									var optionsTable = {
+					    				width: 400,
+					    				height: 350,
+					    				allowHtml: true,
+					    				cssClassNames: { 
+					    					headerCell: 'headerCell',
+					    					tableCell:  'tableCell' 
+					    				}
+					    			  };
+							 	    var chart = drawChart(chartType, chartID, dataArray, optionsChart);
+							 		var tabla = drawChart('tableChart', tableID, dataArray, optionsTable);
+							 		
+							 		google.visualization.events.addListener(tabla, 'select', function() {
+							 			chart.setSelection(tabla.getSelection());
+							 		});
+							 		google.visualization.events.addListener(chart, 'select', function() {
+							 			tabla.setSelection(chart.getSelection());
+							 		});
+							 	}	
+							
+							 function drawChart(chartType, containerID, dataArray, options) {
+							 	    var data = google.visualization.arrayToDataTable(dataArray);
+							 	    var containerDiv = document.getElementById(containerID);
+							 	    var chart = false;
+							
+							 	    if (chartType.toUpperCase() == 'BARCHART') {
+							 	        chart = new google.visualization.BarChart(containerDiv);
+							 	    } else if (chartType.toUpperCase() == 'COLUMNCHART') {
+							 	        chart = new google.visualization.ColumnChart(containerDiv);
+							 	    } else if (chartType.toUpperCase() == 'PIECHART') {
+							 	        chart = new google.visualization.PieChart(containerDiv);
+							 	    } else if (chartType.toUpperCase() == 'LINECHART') {
+							 	        chart = new google.visualization.LineChart(containerDiv);
+							 	    } else if (chartType.toUpperCase() == 'COMBOCHART') {
+							 	        chart = new google.visualization.ComboChart(containerDiv);
+							 	    } else if (chartType.toUpperCase() == 'GAUGE') {
+							 	        chart = new google.visualization.Gauge(containerDiv);
+							 	    } else if (chartType.toUpperCase() == 'TABLECHART') {
+							 	        chart = new google.visualization.Table(containerDiv);
+							 	    }
+							
+							 	    chart.draw(data, options);
+							 		
+							 		return chart;
+							 	}
+					     
+					     </script>
+								
+						<!-- Aca se van a reemplazar los reportes segun corresponda -->
+						<wicket:child />
+						
+						<!-- El siguiente <div> es referenciado por el link de "Ver detalle" que puede aparecer en alguna pagina de reporte -->
+						<div id="verDetalleModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						        <h4 class="modal-title">Detalle</h4>
+						      </div>
+						      <div class="modal-body">
+						        	<div id="table"></div>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Volver</button>
+						      </div>
+						    </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
+						</div><!-- /.modal -->
+							
+				</div>
+			
+				<a href="inicio" class="btn btn-default pull-right">Volver</a>
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

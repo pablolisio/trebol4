@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<img src="images/ordenesPago-64.png" alt="OrdenesPago"/>
+					Ordenes de Pago
+					<small><span>Seleccionar Tipo de Orden de Pago (Paso 1 de 5)</span></small>
+				</h2>
+			</div>
+			<div class="panel-body">
+			
+				<br><br><br>
+				
+				<div class="row">
+					<div class="col-md-11"><a href="registrar-opNormal" class="btn btn-primary btn-lg col-md-12">Crear Orden de Pago</a></div>
+				</div>
+				
+				<br><br>
+				
+				<div class="row">
+					<div class="col-md-5"><a href="registrar-opCPySF" class="btn btn-info col-md-12">Crear OP Con Proveedor y Sin Factura</a></div>
+					<div class="col-md-5 col-md-offset-1"><a href="registrar-opSPySF" class="btn btn-info col-md-12">Crear OP Sin Proveedor y Sin Factura</a></div>
+				</div>
+				
+				<br><br><br>
+				
+			</div>
+		</div>
+
+    </div><!-- /.container -->
+	
+</wicket:extend>
+</body>
+</html>

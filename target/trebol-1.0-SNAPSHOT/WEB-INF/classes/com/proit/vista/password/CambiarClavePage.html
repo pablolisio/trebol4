@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<wicket:extend>
+	<!-- MENU -->
+    <div class="navbar-wrapper">
+      <div class="container">		  
+		  <div wicket:id="facturarOnLineMenu"></div>
+      </div>
+    </div>
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+    <div class="container marketing">
+    
+    	<div wicket:id="alerta" class="alert alert-success alert-dismissable">
+		  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		  <span wicket:id="textoAlerta">Alerta</span>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">
+					<img src="images/cambiarClave.png" alt="CambiarClave"/>
+					Cambiar Clave
+				</h1>
+			</div>
+			<div class="panel-body">
+			
+			  <div style="width: 30%;margin:1% 1% 1% 30%;">
+			  
+				<div class="errorLogin" wicket:id="feedback"></div>
+
+				<form role="form" wicket:id="form">
+				  <div class="form-group">
+				    <label>Clave actual</label><small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small>
+				    <input type="password" class="form-control" placeholder="Clave actual" wicket:id="claveActual">
+				    <small><a wicket:id="olvidoClave" href="#" data-toggle="tooltip" title="Se te enviar&aacute; un email a tu casilla con una nueva clave para poder ingresar">&iquest;Olvidaste tu clave?</a></small>
+				  </div>
+				  <div class="form-group">
+				    <label>Clave nueva</label><small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small>
+				    <input type="password" class="form-control" placeholder="Clave nueva" wicket:id="claveNueva">
+				  </div>
+				  <div class="form-group">
+				    <label>Confirme la nueva clave</label><small data-toggle="tooltip" title="Campo obligatorio">&nbsp;*</small>
+				    <input type="password" class="form-control" placeholder="Confirme clave" wicket:id="claveNuevaConfirm">
+				  </div>
+				  <div class="form-group pull-right">
+				  	<button type="submit" class="btn btn-success">Guardar</button>
+				  	<button class="btn btn-default pull-right" wicket:id="cancelarLink">Cancelar</button>
+				  </div>
+				</form>
+				
+			  </div>
+			  
+			</div>
+			
+		</div>
+
+    </div><!-- /.container -->
+		
+</wicket:extend>
+</body>
+</html>

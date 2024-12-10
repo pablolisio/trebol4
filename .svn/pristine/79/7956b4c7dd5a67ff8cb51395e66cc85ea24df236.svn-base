@@ -1,0 +1,10 @@
+proveedorSearchAutocomplete.Required=Debe ingresar la Razon Social del proveedor.
+cuitCuilProveedorSearchAutocomplete.Required=Debe ingresar el CUIT/CUIL del proveedor.
+importeEfectivo.Required=Debe ingresar el Importe Efectivo. Como mínimo debe ingresar el valor '0' (Cero).
+importeEfectivo.IConverter.double=El Importe Efectivo debe contener un número válido.
+importeTarjeta.Required=Debe ingresar el Importe Tarjeta Crédito. Como mínimo debe ingresar el valor '0' (Cero).
+importeTarjeta.IConverter.double=El Importe Tarjeta Crédito debe contener un número válido.
+clienteSearchAutocomplete.Required=Debe ingresar el Cliente.
+eventoSearchAutoComplete.Required=Debe ingresar el Evento.
+planCuenta.Required=Debe ingresar el Plan de Cuenta.
+planCuenta.nullValid=Seleccionar
