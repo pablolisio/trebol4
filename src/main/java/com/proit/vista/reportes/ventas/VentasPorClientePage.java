@@ -173,20 +173,20 @@ public class VentasPorClientePage extends FacturarOnLineBasePage {
 			protected void populateItem(Item<ReporteVentaCliente> item) {
 				ReporteVentaCliente reporteVentaCliente = item.getModelObject();
 				String cliente = reporteVentaCliente.getCliente();
-				int ene = reporteVentaCliente.getEne().intValue();
-				int feb = reporteVentaCliente.getFeb().intValue();
-				int mar = reporteVentaCliente.getMar().intValue();
-				int abr = reporteVentaCliente.getAbr().intValue();
-				int may = reporteVentaCliente.getMay().intValue();
-				int jun = reporteVentaCliente.getJun().intValue();
-				int jul = reporteVentaCliente.getJul().intValue();
-				int ago = reporteVentaCliente.getAgo().intValue();
-				int sep = reporteVentaCliente.getSep().intValue();
-				int oct = reporteVentaCliente.getOct().intValue();
-				int nov = reporteVentaCliente.getNov().intValue();
-				int dic = reporteVentaCliente.getDic().intValue();
-				int total = reporteVentaCliente.getTotal().intValue();
-				int promedio = reporteVentaCliente.getPromedio().intValue();
+				long ene = reporteVentaCliente.getEne().longValue();
+				long feb = reporteVentaCliente.getFeb().longValue();
+				long mar = reporteVentaCliente.getMar().longValue();
+				long abr = reporteVentaCliente.getAbr().longValue();
+				long may = reporteVentaCliente.getMay().longValue();
+				long jun = reporteVentaCliente.getJun().longValue();
+				long jul = reporteVentaCliente.getJul().longValue();
+				long ago = reporteVentaCliente.getAgo().longValue();
+				long sep = reporteVentaCliente.getSep().longValue();
+				long oct = reporteVentaCliente.getOct().longValue();
+				long nov = reporteVentaCliente.getNov().longValue();
+				long dic = reporteVentaCliente.getDic().longValue();
+				long total = reporteVentaCliente.getTotal().longValue();
+				long promedio = reporteVentaCliente.getPromedio().longValue();
 				double porcentaje = sumaTotales!=0 ? ((double)total / sumaTotales) : 0;
 				
 				Label clienteLabel = new Label("cliente", cliente);

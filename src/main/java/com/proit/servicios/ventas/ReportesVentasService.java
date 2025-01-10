@@ -113,50 +113,62 @@ public class ReportesVentasService implements Serializable {
 		String añoActual = dateFormat.format(añoSeleccionado.getTime());
 		String añoProx = dateFormat.format(añoSiguiente.getTime());
 		
-		int numMesActual = Calendar.getInstance().get(Calendar.MONTH)+1;
-				
+		
+		Calendar today = Calendar.getInstance();
+		String yearOfToday = dateFormat.format(today.getTime());
+		int denominadorPromedio = 12;
+		if (yearOfToday.equals(añoActual)) {
+			denominadorPromedio = today.get(Calendar.MONTH)+1;
+		}
+		
         String sqlString = "SELECT " + ( returnCount ? "COUNT(*)" : "*" ) + " FROM " +
         		"(" +
-        		"select c.razon_social,  " + 
-        		"CASE WHEN (ene is null) THEN 0 ELSE ene END as ene, " + 
-        		"CASE WHEN (feb is null) THEN 0 ELSE feb END as feb, " + 
-        		"CASE WHEN (mar is null) THEN 0 ELSE mar END as mar, " + 
-        		"CASE WHEN (abr is null) THEN 0 ELSE abr END as abr, " + 
-        		"CASE WHEN (may is null) THEN 0 ELSE may END as may, " + 
-        		"CASE WHEN (jun is null) THEN 0 ELSE jun END as jun, " + 
-        		"CASE WHEN (jul is null) THEN 0 ELSE jul END as jul, " + 
-        		"CASE WHEN (ago is null) THEN 0 ELSE ago END as ago, " + 
-        		"CASE WHEN (sep is null) THEN 0 ELSE sep END as sep, " + 
-        		"CASE WHEN (oct is null) THEN 0 ELSE oct END as oct, " + 
-        		"CASE WHEN (nov is null) THEN 0 ELSE nov END as nov, " + 
-        		"CASE WHEN (dic is null) THEN 0 ELSE dic END as dic, " + 
-        		"CASE WHEN (total is null) THEN 0 ELSE total END as total, " + 
-        		"CASE WHEN (promedio is null) THEN 0 ELSE promedio END as promedio " + 
-        		"from  " + 
-        		"cliente c LEFT JOIN " + 
-        		"(select razon_social,SUM(ene) as ene,SUM(feb) as feb,SUM(mar) as mar,SUM(abr) as abr,SUM(may) as may,SUM(jun) as jun,SUM(jul) as jul," +
-        		"SUM(ago) as ago,SUM(sep) as sep,SUM(oct) as oct,SUM(nov) as nov,SUM(dic) as dic, " + 
-        		"SUM(ene+feb+mar+abr+may+jun+jul+ago+sep+oct+nov+dic) as total, " + 
-        		"SUM(ene+feb+mar+abr+may+jun+jul+ago+sep+oct+nov+dic)/"+numMesActual+" as promedio " + 
-        		"from " + 
-        		"(select razon_social, " + 
-        		"CASE WHEN (fecha >= '"+añoActual+"-01-01' and fecha < '"+añoActual+"-02-01') THEN subtotal ELSE 0 END as ene, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-02-01' and fecha < '"+añoActual+"-03-01') THEN subtotal ELSE 0 END as feb, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-03-01' and fecha < '"+añoActual+"-04-01') THEN subtotal ELSE 0 END as mar, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-04-01' and fecha < '"+añoActual+"-05-01') THEN subtotal ELSE 0 END as abr, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-05-01' and fecha < '"+añoActual+"-06-01') THEN subtotal ELSE 0 END as may, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-06-01' and fecha < '"+añoActual+"-07-01') THEN subtotal ELSE 0 END as jun, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-07-01' and fecha < '"+añoActual+"-08-01') THEN subtotal ELSE 0 END as jul, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-08-01' and fecha < '"+añoActual+"-09-01') THEN subtotal ELSE 0 END as ago, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-09-01' and fecha < '"+añoActual+"-10-01') THEN subtotal ELSE 0 END as sep, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-10-01' and fecha < '"+añoActual+"-11-01') THEN subtotal ELSE 0 END as oct, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-11-01' and fecha < '"+añoActual+"-12-01') THEN subtotal ELSE 0 END as nov, " +
-        		"CASE WHEN (fecha >= '"+añoActual+"-12-01' and fecha < '"+añoProx+"-01-01') THEN subtotal ELSE 0 END as dic " +
-        		"from  " + 
-        		"subtotal_por_cli_fecha_estado_factura) agrego_totales " + 
-        		"GROUP BY razon_social) lista_completa ON c.razon_social = lista_completa.razon_social " + 
-        		"where c.borrado = false " + 
-        		"ORDER BY total desc, razon_social asc " + 
+        		
+        		"select razon_social, ene, feb, mar, abr, may, jun, jul, ago, sep, oct, nov, dic, " +
+        		"SUM(ene+feb+mar+abr+may+jun+jul+ago+sep+oct+nov+dic) as total, " +
+        		"(SUM(ene+feb+mar+abr+may+jun+jul+ago+sep+oct+nov+dic)/"+denominadorPromedio+") as promedio " +
+        		"from " +
+        		"(" +
+	        		"select c.razon_social,  " + 
+	        		"CASE WHEN (ene is null) THEN 0 ELSE ene END as ene, " + 
+	        		"CASE WHEN (feb is null) THEN 0 ELSE feb END as feb, " + 
+	        		"CASE WHEN (mar is null) THEN 0 ELSE mar END as mar, " + 
+	        		"CASE WHEN (abr is null) THEN 0 ELSE abr END as abr, " + 
+	        		"CASE WHEN (may is null) THEN 0 ELSE may END as may, " + 
+	        		"CASE WHEN (jun is null) THEN 0 ELSE jun END as jun, " + 
+	        		"CASE WHEN (jul is null) THEN 0 ELSE jul END as jul, " + 
+	        		"CASE WHEN (ago is null) THEN 0 ELSE ago END as ago, " + 
+	        		"CASE WHEN (sep is null) THEN 0 ELSE sep END as sep, " + 
+	        		"CASE WHEN (oct is null) THEN 0 ELSE oct END as oct, " + 
+	        		"CASE WHEN (nov is null) THEN 0 ELSE nov END as nov, " + 
+	        		"CASE WHEN (dic is null) THEN 0 ELSE dic END as dic " + 
+	        		"from  " + 
+	        		"cliente c LEFT JOIN " + 
+	        		"(select razon_social,SUM(ene) as ene,SUM(feb) as feb,SUM(mar) as mar,SUM(abr) as abr,SUM(may) as may,SUM(jun) as jun,SUM(jul) as jul," +
+	        		"SUM(ago) as ago,SUM(sep) as sep,SUM(oct) as oct,SUM(nov) as nov,SUM(dic) as dic " + 
+	        		"from " + 
+	        		"(select razon_social, " + 
+	        		"CASE WHEN (fecha >= '"+añoActual+"-01-01' and fecha < '"+añoActual+"-02-01') THEN subtotal ELSE 0 END as ene, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-02-01' and fecha < '"+añoActual+"-03-01') THEN subtotal ELSE 0 END as feb, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-03-01' and fecha < '"+añoActual+"-04-01') THEN subtotal ELSE 0 END as mar, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-04-01' and fecha < '"+añoActual+"-05-01') THEN subtotal ELSE 0 END as abr, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-05-01' and fecha < '"+añoActual+"-06-01') THEN subtotal ELSE 0 END as may, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-06-01' and fecha < '"+añoActual+"-07-01') THEN subtotal ELSE 0 END as jun, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-07-01' and fecha < '"+añoActual+"-08-01') THEN subtotal ELSE 0 END as jul, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-08-01' and fecha < '"+añoActual+"-09-01') THEN subtotal ELSE 0 END as ago, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-09-01' and fecha < '"+añoActual+"-10-01') THEN subtotal ELSE 0 END as sep, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-10-01' and fecha < '"+añoActual+"-11-01') THEN subtotal ELSE 0 END as oct, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-11-01' and fecha < '"+añoActual+"-12-01') THEN subtotal ELSE 0 END as nov, " +
+	        		"CASE WHEN (fecha >= '"+añoActual+"-12-01' and fecha < '"+añoProx+"-01-01') THEN subtotal ELSE 0 END as dic " +
+	        		"from  " + 
+	        		"subtotal_por_cli_fecha_estado_factura where estado_id not in ("+ EstadoFacturaVenta.ANULADO.getId() +") "+
+	        		") agrego_totales " + 
+	        		"GROUP BY razon_social) lista_completa ON c.razon_social = lista_completa.razon_social " + 
+	        		"where c.borrado = false " +	        		
+	        	") AS VENTAS_SIN_TOTAL " + 
+	    		"GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12,13 " +
+	    		"ORDER BY total desc, razon_social asc " + 
+        		
         		") AS VENTAS_POR_CLIENTE";
 		return sqlString;
 	}
