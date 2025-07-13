@@ -57,7 +57,7 @@ public class ExcelGeneratorEventoDetallePagos implements Serializable{
 				for (FacturaCompra factura : ordenPago.getListadoFacturas()) {
 					OrdenPagoExcel3 ordenPagoExcel3 = new OrdenPagoExcel3();
 					ordenPagoExcel3.convertFromOrdenPagoConFactura(ordenPago, factura, printOPInfo);
-					printOPInfo = false;
+					//printOPInfo = false;
 					listaOPExcel.add(ordenPagoExcel3);
 				}
 				
