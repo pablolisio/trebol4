@@ -199,12 +199,15 @@ public class OrdenPagoExcel3 {
 		setSubtotalEvento(totalPagos);
 	}
 	
-	public void convertFromOrdenPagoConFactura(OrdenPago ordenPago, FacturaCompra factura, boolean printOPInfo) {
+	public void convertFromOrdenPagoConFactura(OrdenPago ordenPago, FacturaCompra factura, boolean printOPInfo, boolean printTotalOP) {
 		
 		if (printOPInfo) {
 			printOPInfo(ordenPago);
 		} else {
 			printOPInfoAsEmpty();
+		}
+		if (printTotalOP) {
+			printTotalOP(ordenPago);
 		}
 		
 		// -- Info Facturas --
@@ -228,27 +231,27 @@ public class OrdenPagoExcel3 {
 			setFcOtrasPerc(factura.getOtrasPerc() * multiplier);
 			setFcTotal(totFact);
 			
-			double subtotalEvento;
-			if (ordenPago.getListadoFacturas().size() == 1) {
-				double totalPagos = 0;
-				for (Pago pago : ordenPago.getListadoPagos()){			
-					totalPagos += pago.getImporte();
-				}
-				subtotalEvento = totalPagos * subtFact / totFact; //proporcional
-			} else { // mas de una fact
-				/*double subtotalFacturas = 0;
-				for (FacturaCompra fc : ordenPago.getListadoFacturas()) {
-					if ( ! fc.isNotaCredito() ) {
-						subtotalFacturas += fc.getSubtotal();
-					} else {
-						subtotalFacturas -= fc.getSubtotal();
+			if (printTotalOP) {
+				double subtotalEvento;
+				if (ordenPago.getListadoFacturas().size() == 1) {
+					double totalPagos = 0;
+					for (Pago pago : ordenPago.getListadoPagos()){			
+						totalPagos += pago.getImporte();
 					}
+					subtotalEvento = totalPagos * subtFact / totFact; //proporcional
+				} else { // mas de una fact
+					double subtotalFacturas = 0;
+					for (FacturaCompra fc : ordenPago.getListadoFacturas()) {
+						if ( ! fc.isNotaCredito() ) {
+							subtotalFacturas += fc.getSubtotal();
+						} else {
+							subtotalFacturas -= fc.getSubtotal();
+						}
+					}
+					subtotalEvento = subtotalFacturas;
 				}
-				subtotalEvento = subtotalFacturas;
-				*/
-				subtotalEvento = subtFact;
+				setSubtotalEvento(subtotalEvento);
 			}
-			setSubtotalEvento(subtotalEvento);
 		}
 		facturasAsociadas = facturasAsociadas.isEmpty()?"<Sin Factura>":facturasAsociadas;
 		setFacturas(facturasAsociadas);
@@ -273,12 +276,6 @@ public class OrdenPagoExcel3 {
 		setModoPago(ordenPago.getModosPagosElegidos());
 		
 		setConcepto(ordenPago.getConcepto()!=null?ordenPago.getConcepto():"");
-		
-		double totalPagos = 0;
-		for (Pago pago : ordenPago.getListadoPagos()){			
-			totalPagos += pago.getImporte();
-		}
-		setTotalOP(totalPagos);
 	}
 	
 	private void printOPInfoAsEmpty() {
@@ -287,5 +284,13 @@ public class OrdenPagoExcel3 {
 		setProveedor("");
 		setModoPago("");
 		setConcepto("");
+	}
+	
+	private void printTotalOP(OrdenPago ordenPago) {
+		double totalPagos = 0;
+		for (Pago pago : ordenPago.getListadoPagos()){			
+			totalPagos += pago.getImporte();
+		}
+		setTotalOP(totalPagos);
 	}
 }
