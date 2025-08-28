@@ -8,6 +8,7 @@ import com.proit.modelo.compras.OrdenPago;
 import com.proit.modelo.compras.Pago;
 import com.proit.modelo.compras.Proveedor;
 import com.proit.utils.Constantes;
+import com.proit.utils.Utils;
 
 
 public class OrdenPagoExcel3 {
@@ -232,23 +233,35 @@ public class OrdenPagoExcel3 {
 			setFcTotal(totFact);
 			
 			if (printTotalOP) {
+				double totalPagos = 0;
+				for (Pago pago : ordenPago.getListadoPagos()){			
+					totalPagos += pago.getImporte();
+				}
+				
 				double subtotalEvento;
-				if (ordenPago.getListadoFacturas().size() == 1) {
-					double totalPagos = 0;
-					for (Pago pago : ordenPago.getListadoPagos()){			
-						totalPagos += pago.getImporte();
-					}
+				if (ordenPago.getListadoFacturas().size() == 1) {					
 					subtotalEvento = totalPagos * subtFact / totFact; //proporcional
-				} else { // mas de una fact
+				} else { // mas de una fact					
 					double subtotalFacturas = 0;
+					double totalFacturas = 0;					
 					for (FacturaCompra fc : ordenPago.getListadoFacturas()) {
 						if ( ! fc.isNotaCredito() ) {
 							subtotalFacturas += fc.getSubtotal();
+							totalFacturas += fc.calculateTotal();
 						} else {
 							subtotalFacturas -= fc.getSubtotal();
+							totalFacturas -= fc.calculateTotal();
 						}
 					}
-					subtotalEvento = subtotalFacturas;
+					
+					//Este es un caso particular, ver mail angela Agosto 2025
+					boolean isPagoParcial = Utils.round(totalFacturas, 2)>Utils.round(totalPagos, 2); //Logica para saber si pago parcial (buscar este comentario)
+					
+					if (isPagoParcial) {
+						subtotalEvento = totalPagos * subtotalFacturas / totalFacturas;
+					} else {
+						subtotalEvento = subtotalFacturas;						
+					}
 				}
 				setSubtotalEvento(subtotalEvento);
 			}
