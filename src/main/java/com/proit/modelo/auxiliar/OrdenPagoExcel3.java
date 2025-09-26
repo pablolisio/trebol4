@@ -198,6 +198,7 @@ public class OrdenPagoExcel3 {
 			totalPagos += pago.getImporte();
 		}
 		setSubtotalEvento(totalPagos);
+        setTotalOP(totalPagos);
 	}
 	
 	public void convertFromOrdenPagoConFactura(OrdenPago ordenPago, FacturaCompra factura, boolean printOPInfo, boolean printTotalOP) {
